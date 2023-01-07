@@ -5,7 +5,7 @@ baseURL = "https://example.com"
 theme = "LoveIt"
 # themes directory
 # 主题目录
-themesDir = "../.."
+themesDir = "themes"
 
 # website title
 # 网站标题
