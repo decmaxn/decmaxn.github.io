@@ -1,4 +1,4 @@
-baseURL = "https://decmaxn.github.io"
+baseURL = "https://www.victorma.net/"
 
 # theme
 # 主题
@@ -131,10 +131,10 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       logo = ""
       # title name
       # 标题名称
-      name = "LoveIt"
+      name = "victorma.net"
       # you can add extra information before the name (HTML format is supported), such as icons
       # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
-      pre = "<i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i>"
+      # pre = "<i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i>"
       # you can add extra information after the name (HTML format is supported), such as icons
       # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
       post = ""
@@ -812,14 +812,6 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         url = "/tags/"
         title = ""
       [[languages.en.menu.main]]
-        weight = 3
-        identifier = "categories"
-        pre = ""
-        post = ""
-        name = "Categories"
-        url = "/categories/"
-        title = ""
-      [[languages.en.menu.main]]
         weight = 4
         identifier = "documentation"
         pre = ""
@@ -841,7 +833,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         pre = "<i class='fab fa-github fa-fw' aria-hidden='true'></i>"
         post = ""
         name = ""
-        url = "https://github.com/dillonzq/LoveIt"
+        url = "https://github.com/decmaxn"
         title = "GitHub"
     [languages.en.params]
       [languages.en.params.search]
