@@ -61,4 +61,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://www.victorma.net/sitemap.xml
+Sitemap: https://decmaxn.github.io/sitemap.xml
