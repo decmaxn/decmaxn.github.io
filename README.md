@@ -49,3 +49,24 @@ $ go run main.go ~/Downloads/blog-01-15-2023.xml ../decmaxn.github.io/content/po
 There is a log of errors when testing with ```hugo server```, I make the following 2 changes to fix that:
 1. Made sure there is not double quotes in the title of each markdown file imported
 2. Remove every imported markdown file has no Author section.
+
+### host to github pages
+
+Create ```.github/workflows/gh-pages.yml``` with content from Hugo official [instruction](https://gohugo.io/hosting-and-deployment/hosting-on-github/)
+
+That commit will trigger an action. The log of the action shows a error ```Module "LoveIt" is not compatible with this Hugo version; run "hugo mod graph" for more information.```
+
+Based on my local hugo version, which has no problem when doing ```hugo server```, modify the workflow file like this:
+```
+          hugo-version: '0.68.3'
+          extended: true
+```
+
+The log of action now have another error ```Error: Error building site: render of "404" failed: execute of template failed: template: 404.html```
+
+Convert content's md files' ```draft: true``` to ```draft: false``` solved this 404 error.
+
+Next error is "the github page isn't here", change ```baseURL = "https://example.com"``` to my the site URL solved this problem.
+
+Finally, chage the repo's "Settings / Code and automation / Pages / Build and deployment / Source" to "deploy from branch" and choice the gh-pages branch.
+
