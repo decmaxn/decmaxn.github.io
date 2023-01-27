@@ -9,7 +9,7 @@ themesDir = "themes"
 
 # website title
 # 网站标题
-title = "decmaxn"
+title = "Victor Ma"
 
 # determines default content language ["en", "zh-cn", "fr", "pl", ...]
 # 设置默认的语言 ["en", "zh-cn", "fr", "pl", ...]
@@ -52,7 +52,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 # 作者配置
 [author]
   name = "Victor Ma"
-  email = "victor.ma@gmail.com"
+  email = ""
   link = ""
 
 # Menu config
@@ -810,14 +810,6 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         post = ""
         name = "Tags"
         url = "/tags/"
-        title = ""
-      [[languages.en.menu.main]]
-        weight = 4
-        identifier = "documentation"
-        pre = ""
-        post = ""
-        name = "Docs"
-        url = "/categories/documentation/"
         title = ""
       [[languages.en.menu.main]]
         weight = 5
