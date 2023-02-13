@@ -2,6 +2,7 @@
 title: "Exception"
 date: 2023-02-12T21:11:12-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Exception

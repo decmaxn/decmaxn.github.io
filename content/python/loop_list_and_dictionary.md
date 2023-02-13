@@ -2,6 +2,7 @@
 title: "Loop_list_and_dictionary"
 date: 2023-02-12T16:53:04-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Two loop variables in one loop with items method of dictionary

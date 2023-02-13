@@ -2,6 +2,7 @@
 title: "Simple math caculation"
 date: 2023-02-09T11:24:40-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Install Python and Hello world

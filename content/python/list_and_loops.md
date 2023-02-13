@@ -2,6 +2,7 @@
 title: "List_and_loops"
 date: 2023-02-10T13:32:46-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Lists and Loop

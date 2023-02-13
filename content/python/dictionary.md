@@ -2,6 +2,7 @@
 title: "Dictionary"
 date: 2023-02-11T15:41:50-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Compare with javascript object

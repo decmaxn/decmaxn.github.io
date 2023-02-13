@@ -6,4 +6,4 @@ draft: false
 
 Here you’ll find mostly my technical experiences and knowledge that it might be helpful to you, with other topics periodically.
 
-Check out my [Tags](tags) section for the range of topics. 👍🏻
+Lately, I update my [python](/python) section more than blog posts. 👍🏻

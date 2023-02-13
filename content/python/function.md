@@ -2,6 +2,7 @@
 title: "Function"
 date: 2023-02-12T19:09:37-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Simple function

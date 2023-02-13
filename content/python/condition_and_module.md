@@ -2,6 +2,7 @@
 title: "Condition_and_module"
 date: 2023-02-08T12:33:27-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # Comparators

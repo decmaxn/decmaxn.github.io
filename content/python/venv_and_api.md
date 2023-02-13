@@ -2,6 +2,7 @@
 title: "Venv and API call"
 date: 2023-02-12T17:12:35-05:00
 draft: false
+tags: ["coding","python","course"]
 ---
 
 # [Venv](https://docs.python.org/3/library/venv.html)
