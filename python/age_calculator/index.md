@@ -33,7 +33,18 @@ You know need print to see the output here
 
 # Basic data types and functions
 
-Built-in types are installed together with Python
+Built-in types are installed together with Python:
+
+|   |Order   |Change   |Duplicate   |define   |
+|---|---|---|---|---|
+|List |ordered   |changeable   |Allows   | []  |
+|Tuple   | ordered  |unchangeable   | Allows  |  () |
+|Set   |unordered and unindexed  |unchangeable*   |No duplicate   | {}  |
+|Dictionary   |ordered**  |changeable  |No duplicate   | {}  |
+
+*Set items are unchangeable, but you can remove and/or add items whenever you like.
+
+**As of Python version 3.7, dictionaries are ordered. In Python 3.6 and earlier, dictionaries are unordered.
 
 ```python
 amount = 20 
