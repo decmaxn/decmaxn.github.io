@@ -20,21 +20,33 @@ First sign up at [Open weather](https://home.openweathermap.org/api_keys) and ge
 ```python
 import requests
 
-api_key = "<tobereplaced>"
+# Copy/paste from Open weatcher:"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}"
+api_key = "<tobereplacedc>"
 city = "Beverly Hills"
 lat = "34.0901"
 lon = "-118.4065"
-# Copy/paste from Open weatcher:"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}"
 
-url = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+api_key+"&units=metric"
+def get_weather(lat,lon,api_key):
+    url = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+api_key+"&units=metric"
 
-response = requests.get(url)
-json = response.json()
+    response = requests.get(url)
+    json = response.json()
 
-# multiple levels of get method
-description = json.get("weather")[0].get("description")
-temp_min = json.get("main").get("temp_min")
-temp_max = json.get("main").get("temp_max")
-print("Today's weather is ",description)
-print("temperature high at:",temp_max,"low at:",temp_min)
+    # multiple levels of get method
+    description = json.get("weather")[0].get("description")
+    temp_min = json.get("main").get("temp_min")
+    temp_max = json.get("main").get("temp_max")
+
+    return {
+        'description': description,
+        'temp_min': temp_min,
+        'temp_max': temp_max
+    }
+
+def main():
+    weather = get_weather(lat,lon,api_key)
+    print("Today's weather is ", weather.get('description'))
+    print("temperature high at:", weather.get('temp_max'),"low at:", weather.get('temp_min'))
+
+main()
 ```
