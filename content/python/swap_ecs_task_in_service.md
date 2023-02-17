@@ -2,6 +2,7 @@
 title: "Swap_ecs_task_in_service"
 date: 2023-02-15T08:50:56-05:00
 draft: false
+tags: ["coding","python","boto3"]
 ---
 
 # Start another ECS task for service before stop the original task
