@@ -1,6 +1,6 @@
 ---
 title: "Concise_form"
-date: 2023-02-16T17:32:15-05:00
+date: 2023-02-13T17:32:15-05:00
 draft: false
 tags: ["coding","python","tips"]
 ---

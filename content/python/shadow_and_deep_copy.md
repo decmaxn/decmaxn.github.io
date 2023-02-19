@@ -1,6 +1,6 @@
 ---
 title: "Shadow_and_deep_copy"
-date: 2023-02-16T19:56:23-05:00
+date: 2023-02-14T19:56:23-05:00
 draft: false
 tags: ["coding","python","tips"]
 ---
