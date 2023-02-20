@@ -804,7 +804,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         url = "/posts/"
         title = ""
       [[languages.en.menu.main]]
-        weight = 1
+        weight = 2
         identifier = "python"
         pre = ""
         post = ""
@@ -812,7 +812,15 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         url = "/python/"
         title = ""
       [[languages.en.menu.main]]
-        weight = 2
+        weight = 3
+        identifier = "git"
+        pre = ""
+        post = ""
+        name = "Git"
+        url = "/git/"
+        title = ""
+      [[languages.en.menu.main]]
+        weight = 4
         identifier = "tags"
         pre = ""
         post = ""
