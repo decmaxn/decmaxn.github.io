@@ -4,17 +4,20 @@ date: 2023-01-20T23:55:21-05:00
 draft: false
 ---
 
-Welcome to my blog! I am an IT professional with a few decades of experience in the field.
+Welcome to my blog! I am an IT professional with a few decades of experience in the field and tons of thing to learn.
 
 ## CLI, not GUI
 
-I love CLI, as it is a valuable tool for IT professionals as it allows for efficient and precise execution of tasks, and can be used to automate processes and manage multiple systems at once.
+I love CLI, as it is a valuable tool for IT professionals as it allows for efficient and precise execution of tasks, plus small text documentation without screen shots.  
 
 ## Scripting, not documentation
+Put commands together and copy/paste can be used to automate processes and manage multiple systems at once. Scripting to stack tasks to make large systems and problems manageable like [My MDT system](https://github.com/decmaxn/MDTlab.git) 
+## DevOps
 
-Why document while you can get it done with one script? If you don't have time to make a script, give me all your commands for me to copy/paste.
+Create infrastructure with Cloudformation, Terraform, Kubernetes, SAM.
+[Git](/git) should be the single system of truth for both code and infr, even documents.
 
-## Learn to program
+## Programing
 
-Cloudformation, Terraform, Kubernetes, SAM, CDK, let me learn real programming.
+Let me deal with error and logic with real programing, eventually everything is code. [Python](/python) here I am.
 
