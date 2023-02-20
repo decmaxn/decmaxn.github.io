@@ -1,5 +1,5 @@
 ---
-title: "What_is_git"
+title: "git_under_the_hood"
 date: 2023-02-20T15:05:13-05:00
 draft: false
 tags: ["coding","git","course"]
