@@ -12,7 +12,7 @@ Put commands together and copy/paste can be used to automate processes and manag
 ## DevOps
 
 Create infrastructure with Cloudformation, Terraform, Kubernetes, SAM.
-[Git](/git) should be the single system of truth for both code and infr, even documents.
+Git repos should be the single system of truth for both code and infr, even documents.
 
 ## Programing
 
