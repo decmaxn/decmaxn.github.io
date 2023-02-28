@@ -5,7 +5,7 @@ draft: false
 tags: ["coding","Go","course"]
 ---
 
-# devcontainer
+# .devcontainer
 
 Run vscode command palette, Dev Conainter and search universal, this way to get Codespaces default container. Later on add pwsh.
 

@@ -813,11 +813,11 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         title = ""
       [[languages.en.menu.main]]
         weight = 3
-        identifier = "git"
+        identifier = "Go"
         pre = ""
         post = ""
-        name = "Git"
-        url = "/git/"
+        name = "Go"
+        url = "/Go/"
         title = ""
       [[languages.en.menu.main]]
         weight = 4

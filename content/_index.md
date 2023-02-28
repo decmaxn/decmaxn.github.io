@@ -6,8 +6,6 @@ draft: false
 
 I am an IT professional with a few decades of experience in the field and tons of thing to learn.
 
-Here you’ll find mostly my technical experiences and knowledge that it might be helpful to you, with other topics periodically.
+Git repos should be the single system of truth for code, infra and document.
 
-[Git](/git) should be the single system of truth for code, infra and document.
-
-Lately, I update my [python](/python) section more than blog posts. 👍🏻
+Lately, I update my [python](/python) and [Go](/go) sections more than blog posts. 👍🏻

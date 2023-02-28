@@ -34,6 +34,10 @@ vscode.install 1.70.1
 
 After installing golang.go extension.  Got a prompt to install the gopls and go-ouitline. 
 
+```bash
+code --install-extension golang.go 
+```
+
 Now, try creat a hello world program and try to features of those tool
 
 1. type pack to see it suggests {}package main
