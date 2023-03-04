@@ -10,7 +10,7 @@ However, I get myself into installing Docker Desktop on a "Windows 10(Server 201
 ## Create workspace
 ```bash
 Profile=<profile>
-Region=<region.
+Region=<region>
 
 # existing Directory Service dreictory
 $ aws ds --profile $Profile --region $Region \
