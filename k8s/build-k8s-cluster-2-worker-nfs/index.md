@@ -31,7 +31,6 @@ sshpass -p "vagrant" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyCheckin
 bash /joincluster.sh >/dev/null 2>&1
 
 # Join worker nodes to the Kubernetes cluster
-echo "[TASK 2] Install NFS client"
 sudo apt install -y nfs-common
 ```
 

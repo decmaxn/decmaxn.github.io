@@ -9,6 +9,7 @@ Here are steps from a training course long time ago to install configure K8s con
 1. All nodes have user vagrant for install, configure and maintain k8s cluster
 
 # Common install and config for all cluster nodes
+The following scripts is modified to work with new versions of everything, refer to [Link](../build-k8s-cluster-2023-control-plan)
 ```bash
 # Linux 文件系统层叠内核模块,将多个文件系统合并成一个只读文件系统，并在其上添加一个可写层
 sudo modprobe overlay
@@ -66,6 +67,7 @@ sudo systemctl enable containerd.service >/dev/null 2>&1
 # Control Plane nodes
 以上步骤需要在所有 kubernetes 节点里做， 下面只属于 control plane 节点
 
+The following scripts is modified to work with new versions of everything, refer to [Link](../build-k8s-cluster-2023-control-plan)
 ```bash
 # Initialize Kubernetes with kubeadm command
 kubeadm config print init-defaults | tee ClusterConfiguration.yaml >/dev/null
@@ -91,7 +93,6 @@ cp /etc/kubernetes/admin.conf /home/vagrant/.kube/config
 chown -R vagrant:vagrant /home/vagrant/.kube
 
 # Deploy calico network
-echo "[TASK 3] Deploy calico network"
 wget https://docs.projectcalico.org/manifests/calico.yaml >/dev/null 2>&1
 su - vagrant -c "kubectl apply -f calico.yaml"
 
