@@ -7,9 +7,11 @@ tags: ["Linux", "Deploy", "tips", "OS", "DataCenter", "H/W"]
 
 ## UEFI bios and Linux Server
 
-Installing Linux server on HP Desktop with UEFI feature. Expense lessson to learn:
+Installing Linux server on HP Desktop with UEFI feature. Expensive lessson I have learned:
 
 Everytime installation failed after it start to copy files, I have tested all kinds of different ways, and it turn out the problem is UEFI. 
+
+> Updated the the next day: The problem wasn't solved this way, I just installed Ubuntu Desktop, that solved the problem.
 
 ```
 From BIOS -> Boot Order, you can disable the whole UEFI feature here
