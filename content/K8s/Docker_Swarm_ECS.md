@@ -53,6 +53,9 @@ gpg --import ecs_cli_gpg.txt
 curl -Lo ecs-cli.asc https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest.asc
 gpg --verify ecs-cli.asc /usr/local/bin/ecs-cli
 sudo chmod +x /usr/local/bin/ecs-cli
+$ ecs-cli -v
+ecs-cli version 1.21.0 (bb0b8f0)
+
 ```
 ## Configuring ECS CLI
 Configuration information is stored in the ~/.ecs directory on macOS and Linux systems 
@@ -94,7 +97,16 @@ $ ecs-cli up
     # --cluster-config dec \
     # --ecs-profile dec
 ```
-
+## List and pull Images from ECR
+```bash
+$ aws ecr --profile <profile> --region eu-west-1 describe-repositories 
+$ ecs-cli pull --aws-profile <profile> <AWS_ACCOUNT>.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo:mytag
+INFO[0000] Getting AWS account ID...                    
+INFO[0000] Pulling image                                 repository=<AWS_ACCOUNT>.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo tag=mytag
+INFO[0006] Image pulled           
+$  docker images | tail -1
+<AWS_ACCOUNT>.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo   mytag      6c1f3809ea08   2 years ago    50.9MB                      
+```
 ## Create task definiation
 Following [ecs-cli official repo](https://github.com/aws/amazon-ecs-cli#creating-an-ecs-cluster) to create 2 files.
 ```bash
