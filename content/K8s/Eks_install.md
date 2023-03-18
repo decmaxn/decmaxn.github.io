@@ -1,7 +1,8 @@
 ---
 title: "Eks_install"
-date: 2023-03-16T21:51:07-04:00
-draft: true
+date: 2023-03-15T21:51:07-04:00
+draft: false
+tags: ["AWS","K8s","Tips"]
 ---
 
 # Install eksctl and kubectl
