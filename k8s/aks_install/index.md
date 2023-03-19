@@ -3,6 +3,8 @@
 
 # Install Azure Cli
 
+Install on Windows with ```choco install azure-cli```, or in linux as below:
+
 ```bash
 $ AZ_REPO=$(lsb_release -cs)
 $ echo "deb [arch=amd64] https://packages.microsoft.com/repos/$ azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/$ azure-cli.list
@@ -10,6 +12,7 @@ $ curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg $ --dearmor |
 $ sudo apt-get update
 $ sudo apt-get install azure-cli
 ```
+
 # Create a AKS cluster
 ```bash
 $ az login
@@ -23,6 +26,16 @@ $ az aks create \
     --kubernetes-version 1.25.5 \ # no need to 
     --node-count 3 #default Node count is 3
 ```
+or
+```powershell
+az login
+az account set -s "Visual Studio Professional Subscription"
+
+# Create an RG and AKS cluster first
+az group create -l eastus -n Kubernetes-Cloud
+az aks create -g Kubernetes-Cloud -n CSCluster --generate-ssh-keys
+```
+
 # Install and config Kubectl
 ```bash
 # az aks install-cli # not necessary in my case
@@ -32,7 +45,18 @@ $ kubectl config get-contexts
 CURRENT   NAME        CLUSTER     AUTHINFO                                 NAMESPACE
 *         CSCluster   CSCluster   clusterUser_Kubernetes-Cloud_CSCluster   
 ```
-
+or
+```powershell
+# Get the credentials and check the connectivity
+# az aks install-cli # not necessary in my case
+az aks get-credentials -g Kubernetes-Cloud -n CSCluster --overwrite-existing
+kubectl get nodes
+az aks scale -g Kubernetes-Cloud -n CSCluster --node-count 1
+PS C:\> kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO                                 NAMESPACE
+*         CSCluster                     CSCluster    clusterUser_Kubernetes-Cloud_CSCluster   
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin                         
+```
 # Check created Cluster and clean up
 
 ```bash
@@ -43,29 +67,61 @@ aks-nodepool1-30040660-vmss000000   Ready    agent   6m59s   v1.25.5
 aks-nodepool1-30040660-vmss000001   Ready    agent   7m9s    v1.25.5
 aks-nodepool1-30040660-vmss000002   Ready    agent   7m4s    v1.25.5
 $ kubectl get pods --all-namespaces
-NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-kube-system   azure-ip-masq-agent-4rtqg             1/1     Running   0          7m15s
-kube-system   azure-ip-masq-agent-7cksn             1/1     Running   0          7m20s
-kube-system   azure-ip-masq-agent-pfrlc             1/1     Running   0          7m10s
-kube-system   cloud-node-manager-bkx6r              1/1     Running   0          7m10s
-kube-system   cloud-node-manager-jc7nc              1/1     Running   0          7m15s
-kube-system   cloud-node-manager-pmtjw              1/1     Running   0          7m20s
-kube-system   coredns-77f75ff65d-4tkjq              1/1     Running   0          8m3s
-kube-system   coredns-77f75ff65d-5jwpn              1/1     Running   0          5m49s
-kube-system   coredns-autoscaler-58bfcf6b5-tqxfc    1/1     Running   0          8m3s
-kube-system   csi-azuredisk-node-4dm99              3/3     Running   0          7m20s
-kube-system   csi-azuredisk-node-p2vwd              3/3     Running   0          7m10s
-kube-system   csi-azuredisk-node-tln65              3/3     Running   0          7m15s
-kube-system   csi-azurefile-node-hqb26              3/3     Running   0          7m15s
-kube-system   csi-azurefile-node-rvtrg              3/3     Running   0          7m20s
-kube-system   csi-azurefile-node-xfn99              3/3     Running   0          7m10s
-kube-system   konnectivity-agent-75bbc5fb66-9k28c   1/1     Running   0          5m48s
-kube-system   konnectivity-agent-75bbc5fb66-wpwv7   1/1     Running   0          8m1s
-kube-system   kube-proxy-2jqsn                      1/1     Running   0          7m15s
-kube-system   kube-proxy-9v9vl                      1/1     Running   0          7m10s
-kube-system   kube-proxy-w9pj4                      1/1     Running   0          7m20s
-kube-system   metrics-server-686f5fc4bc-f6thg       2/2     Running   0          5m43s
-kube-system   metrics-server-686f5fc4bc-g86rh       2/2     Running   0          5m43s
+```
+
+#  Create ACR and repo, images, tags
+```powershell
+# 创建 ACR registry
+az acr create -n myacr -g $RG --sku Basic  # SKU：Basic、Standard、Premium
+az acr list -o table
+
+# 现在，我们将从 Docker 存储库导入 hello-world 映像
+az acr import -n myacr --source docker.io/library/hello-world:latest -t hello-world-backup:1.0.0
+
+# 我们现在有一个存储库, 一个映像, 一个标签
+az acr repository list -n myacr -o table
+az acr repository show -n myacr --repository hello-world-backup -o table
+az acr repository show-tags -n myacr --repository hello-world-backup -o table
+
+# 重新导入一个新标签的镜像，再导入另一个镜像
+az acr import -n myacr --source docker.io/library/hello-world:latest -t hello-world-backup:1.1.0
+az acr import -n myacr --source docker.io/library/nginx:latest --image nginx:v1
+
+
+# 克隆一个来自GitHub的示例项目, 而且直接build这个docker image
+git clone https://github.com/Azure-Samples/acr-build-helloworld-node
+az acr build --registry myacr --image helloacrtasks:v1 acr-build-helloworld-node
+```
+
+# Deploy a Image to the new Cluster
+```powershell
+# 获取我们的ACR登录服务器
+az acr show -n myacr -o table
+$loginServer=(az acr show -n myacr --query loginServer)
+
+# 新建一个命名空间, 便于留用Cluster 的 Clean up.
+# kubectl create namespace acr
+# kubectl config set-context --current --namespace acr
+
+# 创建一个deployment
+kubectl create deployment nginx --image=$loginServer/nginx:v1
+
+# 检查部署是否成功, 得到 Access Denied Error
+kubectl get deployment
+kubectl get pods
+kubectl describe pod (kubectl get pods -o=jsonpath='{.items[0].metadata.name}')
+
+# 解决以上问题，需要将ACR附加到AKS群集（也可以在创建时完成）
+kubectl delete deployment nginx
+az aks update -n CSCluster -g Kubernetes-Cloud --attach-acr myacr
+
+# 再次部署deployment，成功
+kubectl create deployment nginx --image=$loginServer/nginx:v1
+kubectl get deployment,pods
+```
+
+# Clean up
+```bash
 $ az aks delete --resource-group "Kubernetes-Cloud" --name CSCluster #--yes --no-wait
 Are you sure you want to perform this operation? (y/n): y
 # if used -no-wait option, it will delete in the back ground. Verify like this:

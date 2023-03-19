@@ -1,7 +1,9 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>AKS_install - Victor Ma</title><meta name=Description content="Victro Ma's blog"><meta property="og:title" content="AKS_install"><meta property="og:description" content="Install Azure Cli 1 2 3 4 5  $ AZ_REPO=$(lsb_release -cs) $ echo &#34;deb [arch=amd64] https://packages.microsoft.com/repos/$azure-cli/ $AZ_REPOmain&#34; | sudo tee /etc/apt/sources.list.d/$ azure-cli.list $ curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg $ --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/$ null $ sudo apt-get update $ sudo apt-get install azure-cli   Create a AKS cluster 1 2 3 4 5 6 7 8 9 10  $ az login $ az account set --subscription &#34;Visual Studio Professional Subscription&#34; $ az group create --name &#34;Kubernetes-Cloud&#34; --location eastus $ az aks get-versions --location eastus -o table # let use 1."><meta property="og:type" content="article"><meta property="og:url" content="https://decmaxn.github.io/k8s/aks_install/"><meta property="og:image" content="https://decmaxn.github.io/logo.png"><meta property="article:published_time" content="2023-03-01T23:06:34-05:00"><meta property="article:modified_time" content="2023-03-02T00:09:40-05:00"><meta property="og:site_name" content="Victor Ma"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://decmaxn.github.io/logo.png"><meta name=twitter:title content="AKS_install"><meta name=twitter:description content="Install Azure Cli 1 2 3 4 5  $ AZ_REPO=$(lsb_release -cs) $ echo &#34;deb [arch=amd64] https://packages.microsoft.com/repos/$azure-cli/ $AZ_REPOmain&#34; | sudo tee /etc/apt/sources.list.d/$ azure-cli.list $ curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg $ --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/$ null $ sudo apt-get update $ sudo apt-get install azure-cli   Create a AKS cluster 1 2 3 4 5 6 7 8 9 10  $ az login $ az account set --subscription &#34;Visual Studio Professional Subscription&#34; $ az group create --name &#34;Kubernetes-Cloud&#34; --location eastus $ az aks get-versions --location eastus -o table # let use 1."><meta name=application-name content="Victor Ma"><meta name=apple-mobile-web-app-title content="Victor Ma"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://decmaxn.github.io/k8s/aks_install/><link rel=next href=https://decmaxn.github.io/k8s/build-k8s-cluster-1-control-plan/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"AKS_install","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/decmaxn.github.io\/k8s\/aks_install\/"},"image":["https:\/\/decmaxn.github.io\/images\/Apple-Devices-Preview.png"],"genre":"K8s","keywords":"Azure, K8s, course","wordcount":435,"url":"https:\/\/decmaxn.github.io\/k8s\/aks_install\/","datePublished":"2023-03-01T23:06:34-05:00","dateModified":"2023-03-02T00:09:40-05:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"xxxx","logo":"https:\/\/decmaxn.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"Victor Ma"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/python/>Python </a><a class=menu-item href=/go/>Go </a><a class=menu-item href=/k8s/>K8s </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/about/>About </a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>AKS_install - Victor Ma</title><meta name=Description content="Victro Ma's blog"><meta property="og:title" content="AKS_install"><meta property="og:description" content="Install Azure Cli Install on Windows with choco install azure-cli, or in linux as below:
+1 2 3 4 5  $ AZ_REPO=$(lsb_release -cs) $ echo &#34;deb [arch=amd64] https://packages.microsoft.com/repos/$azure-cli/ $AZ_REPOmain&#34; | sudo tee /etc/apt/sources.list.d/$ azure-cli.list $ curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg $ --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/$ null $ sudo apt-get update $ sudo apt-get install azure-cli   Create a AKS cluster 1 2 3 4 5 6 7 8 9 10  $ az login $ az account set --subscription &#34;Visual Studio Professional Subscription&#34; $ az group create --name &#34;Kubernetes-Cloud&#34; --location eastus $ az aks get-versions --location eastus -o table # let use 1."><meta property="og:type" content="article"><meta property="og:url" content="https://decmaxn.github.io/k8s/aks_install/"><meta property="og:image" content="https://decmaxn.github.io/logo.png"><meta property="article:published_time" content="2023-03-01T23:06:34-05:00"><meta property="article:modified_time" content="2023-03-19T01:01:46-04:00"><meta property="og:site_name" content="Victor Ma"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://decmaxn.github.io/logo.png"><meta name=twitter:title content="AKS_install"><meta name=twitter:description content="Install Azure Cli Install on Windows with choco install azure-cli, or in linux as below:
+1 2 3 4 5  $ AZ_REPO=$(lsb_release -cs) $ echo &#34;deb [arch=amd64] https://packages.microsoft.com/repos/$azure-cli/ $AZ_REPOmain&#34; | sudo tee /etc/apt/sources.list.d/$ azure-cli.list $ curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg $ --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/$ null $ sudo apt-get update $ sudo apt-get install azure-cli   Create a AKS cluster 1 2 3 4 5 6 7 8 9 10  $ az login $ az account set --subscription &#34;Visual Studio Professional Subscription&#34; $ az group create --name &#34;Kubernetes-Cloud&#34; --location eastus $ az aks get-versions --location eastus -o table # let use 1."><meta name=application-name content="Victor Ma"><meta name=apple-mobile-web-app-title content="Victor Ma"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://decmaxn.github.io/k8s/aks_install/><link rel=next href=https://decmaxn.github.io/k8s/build-k8s-cluster-1-control-plan/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"AKS_install","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/decmaxn.github.io\/k8s\/aks_install\/"},"image":["https:\/\/decmaxn.github.io\/images\/Apple-Devices-Preview.png"],"genre":"K8s","keywords":"Azure, K8s, course","wordcount":636,"url":"https:\/\/decmaxn.github.io\/k8s\/aks_install\/","datePublished":"2023-03-01T23:06:34-05:00","dateModified":"2023-03-19T01:01:46-04:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"xxxx","logo":"https:\/\/decmaxn.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"Victor Ma"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/python/>Python </a><a class=menu-item href=/go/>Go </a><a class=menu-item href=/k8s/>K8s </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/about/>About </a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder="Search titles or contents..." id=search-input-desktop>
 <a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
 <a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/>Posts</a><a class=menu-item href=/python/>Python</a><a class=menu-item href=/go/>Go</a><a class=menu-item href=/k8s/>K8s</a><a class=menu-item href=/tags/>Tags</a><a class=menu-item href=/about/>About</a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">AKS_install</h1><div class=content id=content><h1 id=install-azure-cli>Install Azure Cli</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">AKS_install</h1><div class=content id=content><h1 id=install-azure-cli>Install Azure Cli</h1><p>Install on Windows with <code>choco install azure-cli</code>, or in linux as below:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -31,6 +33,18 @@ $ az aks create <span class=se>\
 </span><span class=se></span>    --name CSCluster <span class=se>\
 </span><span class=se></span>    --kubernetes-version 1.25.5 <span class=se>\ </span><span class=c1># no need to</span> 
     --node-count <span class=m>3</span> <span class=c1>#default Node count is 3</span>
+</code></pre></td></tr></table></div></div><p>or</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-powershell data-lang=powershell><span class=n>az</span> <span class=n>login</span>
+<span class=n>az</span> <span class=n>account</span> <span class=nb>set </span><span class=n>-s</span> <span class=s2>&#34;Visual Studio Professional Subscription&#34;</span>
+
+<span class=c># Create an RG and AKS cluster first</span>
+<span class=n>az</span> <span class=nb>group </span><span class=n>create</span> <span class=n>-l</span> <span class=n>eastus</span> <span class=n>-n</span> <span class=n>Kubernetes-Cloud</span>
+<span class=n>az</span> <span class=n>aks</span> <span class=n>create</span> <span class=n>-g</span> <span class=n>Kubernetes-Cloud</span> <span class=n>-n</span> <span class=n>CSCluster</span> <span class=p>-</span><span class=n>-generate-ssh-keys</span>
 </code></pre></td></tr></table></div></div><h1 id=install-and-config-kubectl>Install and config Kubectl</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
@@ -43,7 +57,79 @@ Merged <span class=s2>&#34;CSCluster&#34;</span> as current context in /home/vma
 $ kubectl config get-contexts
 CURRENT   NAME        CLUSTER     AUTHINFO                                 NAMESPACE
 *         CSCluster   CSCluster   clusterUser_Kubernetes-Cloud_CSCluster   
-</code></pre></td></tr></table></div></div><h1 id=check-created-cluster-and-clean-up>Check created Cluster and clean up</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</code></pre></td></tr></table></div></div><p>or</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-powershell data-lang=powershell><span class=c># Get the credentials and check the connectivity</span>
+<span class=c># az aks install-cli # not necessary in my case</span>
+<span class=n>az</span> <span class=n>aks</span> <span class=nb>get-credentials</span> <span class=n>-g</span> <span class=n>Kubernetes-Cloud</span> <span class=n>-n</span> <span class=n>CSCluster</span> <span class=p>-</span><span class=n>-overwrite-existing</span>
+<span class=n>kubectl</span> <span class=n>get</span> <span class=n>nodes</span>
+<span class=n>az</span> <span class=n>aks</span> <span class=n>scale</span> <span class=n>-g</span> <span class=n>Kubernetes-Cloud</span> <span class=n>-n</span> <span class=n>CSCluster</span> <span class=p>-</span><span class=n>-node-count</span> <span class=n>1</span>
+<span class=nb>PS </span><span class=n>C:</span><span class=p>\&gt;</span> <span class=n>kubectl</span> <span class=n>config</span> <span class=nb>get-contexts</span>
+<span class=n>CURRENT</span>   <span class=n>NAME</span>                          <span class=n>CLUSTER</span>      <span class=n>AUTHINFO</span>                                 <span class=n>NAMESPACE</span>
+<span class=p>*</span>         <span class=n>CSCluster</span>                     <span class=n>CSCluster</span>    <span class=n>clusterUser_Kubernetes-Cloud_CSCluster</span>   
+          <span class=n>kubernetes-admin</span><span class=nv>@kubernetes</span>   <span class=n>kubernetes</span>   <span class=n>kubernetes-admin</span>                         
+</code></pre></td></tr></table></div></div><h1 id=check-created-cluster-and-clean-up>Check created Cluster and clean up</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=c1># kubectl config use-context CSCluster # No need since there is only one context in my case</span>
+$ kubectl get nodes
+NAME                                STATUS   ROLES   AGE     VERSION
+aks-nodepool1-30040660-vmss000000   Ready    agent   6m59s   v1.25.5
+aks-nodepool1-30040660-vmss000001   Ready    agent   7m9s    v1.25.5
+aks-nodepool1-30040660-vmss000002   Ready    agent   7m4s    v1.25.5
+$ kubectl get pods --all-namespaces
+</code></pre></td></tr></table></div></div><h1 id=create-acr-and-repo-images-tags>Create ACR and repo, images, tags</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-powershell data-lang=powershell><span class=c># 创建 ACR registry</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>create</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=n>-g</span> <span class=nv>$RG</span> <span class=p>-</span><span class=n>-sku</span> <span class=n>Basic</span>  <span class=c># SKU：Basic、Standard、Premium</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>list</span> <span class=n>-o</span> <span class=n>table</span>
+
+<span class=c># 现在，我们将从 Docker 存储库导入 hello-world 映像</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>import</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-source</span> <span class=n>docker</span><span class=p>.</span><span class=n>io</span><span class=p>/</span><span class=n>library</span><span class=p>/</span><span class=n>hello-world</span><span class=err>:</span><span class=n>latest</span> <span class=n>-t</span> <span class=n>hello-world-backup</span><span class=err>:</span><span class=n>1</span><span class=p>.</span><span class=n>0</span><span class=p>.</span><span class=n>0</span>
+
+<span class=c># 我们现在有一个存储库, 一个映像, 一个标签</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>repository</span> <span class=n>list</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=n>-o</span> <span class=n>table</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>repository</span> <span class=n>show</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-repository</span> <span class=n>hello-world-backup</span> <span class=n>-o</span> <span class=n>table</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>repository</span> <span class=nb>show-tags</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-repository</span> <span class=n>hello-world-backup</span> <span class=n>-o</span> <span class=n>table</span>
+
+<span class=c># 重新导入一个新标签的镜像，再导入另一个镜像</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>import</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-source</span> <span class=n>docker</span><span class=p>.</span><span class=n>io</span><span class=p>/</span><span class=n>library</span><span class=p>/</span><span class=n>hello-world</span><span class=err>:</span><span class=n>latest</span> <span class=n>-t</span> <span class=n>hello-world-backup</span><span class=err>:</span><span class=n>1</span><span class=p>.</span><span class=n>1</span><span class=p>.</span><span class=n>0</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>import</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-source</span> <span class=n>docker</span><span class=p>.</span><span class=n>io</span><span class=p>/</span><span class=n>library</span><span class=p>/</span><span class=n>nginx</span><span class=err>:</span><span class=n>latest</span> <span class=p>-</span><span class=n>-image</span> <span class=n>nginx</span><span class=err>:</span><span class=n>v1</span>
+
+
+<span class=c># 克隆一个来自GitHub的示例项目, 而且直接build这个docker image</span>
+<span class=n>git</span> <span class=n>clone</span> <span class=n>https</span><span class=err>:</span><span class=p>//</span><span class=n>github</span><span class=p>.</span><span class=n>com</span><span class=p>/</span><span class=n>Azure-Samples</span><span class=p>/</span><span class=n>acr-build-helloworld-node</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>build</span> <span class=p>-</span><span class=n>-registry</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-image</span> <span class=n>helloacrtasks</span><span class=err>:</span><span class=n>v1</span> <span class=n>acr-build-helloworld-node</span>
+</code></pre></td></tr></table></div></div><h1 id=deploy-a-image-to-the-new-cluster>Deploy a Image to the new Cluster</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -66,48 +152,34 @@ CURRENT   NAME        CLUSTER     AUTHINFO                                 NAMES
 </span><span class=lnt>21
 </span><span class=lnt>22
 </span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span><span class=lnt>30
-</span><span class=lnt>31
-</span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=c1># kubectl config use-context CSCluster # No need since there is only one context in my case</span>
-$ kubectl get nodes
-NAME                                STATUS   ROLES   AGE     VERSION
-aks-nodepool1-30040660-vmss000000   Ready    agent   6m59s   v1.25.5
-aks-nodepool1-30040660-vmss000001   Ready    agent   7m9s    v1.25.5
-aks-nodepool1-30040660-vmss000002   Ready    agent   7m4s    v1.25.5
-$ kubectl get pods --all-namespaces
-NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-kube-system   azure-ip-masq-agent-4rtqg             1/1     Running   <span class=m>0</span>          7m15s
-kube-system   azure-ip-masq-agent-7cksn             1/1     Running   <span class=m>0</span>          7m20s
-kube-system   azure-ip-masq-agent-pfrlc             1/1     Running   <span class=m>0</span>          7m10s
-kube-system   cloud-node-manager-bkx6r              1/1     Running   <span class=m>0</span>          7m10s
-kube-system   cloud-node-manager-jc7nc              1/1     Running   <span class=m>0</span>          7m15s
-kube-system   cloud-node-manager-pmtjw              1/1     Running   <span class=m>0</span>          7m20s
-kube-system   coredns-77f75ff65d-4tkjq              1/1     Running   <span class=m>0</span>          8m3s
-kube-system   coredns-77f75ff65d-5jwpn              1/1     Running   <span class=m>0</span>          5m49s
-kube-system   coredns-autoscaler-58bfcf6b5-tqxfc    1/1     Running   <span class=m>0</span>          8m3s
-kube-system   csi-azuredisk-node-4dm99              3/3     Running   <span class=m>0</span>          7m20s
-kube-system   csi-azuredisk-node-p2vwd              3/3     Running   <span class=m>0</span>          7m10s
-kube-system   csi-azuredisk-node-tln65              3/3     Running   <span class=m>0</span>          7m15s
-kube-system   csi-azurefile-node-hqb26              3/3     Running   <span class=m>0</span>          7m15s
-kube-system   csi-azurefile-node-rvtrg              3/3     Running   <span class=m>0</span>          7m20s
-kube-system   csi-azurefile-node-xfn99              3/3     Running   <span class=m>0</span>          7m10s
-kube-system   konnectivity-agent-75bbc5fb66-9k28c   1/1     Running   <span class=m>0</span>          5m48s
-kube-system   konnectivity-agent-75bbc5fb66-wpwv7   1/1     Running   <span class=m>0</span>          8m1s
-kube-system   kube-proxy-2jqsn                      1/1     Running   <span class=m>0</span>          7m15s
-kube-system   kube-proxy-9v9vl                      1/1     Running   <span class=m>0</span>          7m10s
-kube-system   kube-proxy-w9pj4                      1/1     Running   <span class=m>0</span>          7m20s
-kube-system   metrics-server-686f5fc4bc-f6thg       2/2     Running   <span class=m>0</span>          5m43s
-kube-system   metrics-server-686f5fc4bc-g86rh       2/2     Running   <span class=m>0</span>          5m43s
-$ az aks delete --resource-group <span class=s2>&#34;Kubernetes-Cloud&#34;</span> --name CSCluster <span class=c1>#--yes --no-wait</span>
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-powershell data-lang=powershell><span class=c># 获取我们的ACR登录服务器</span>
+<span class=n>az</span> <span class=n>acr</span> <span class=n>show</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=n>-o</span> <span class=n>table</span>
+<span class=nv>$loginServer</span><span class=p>=(</span><span class=n>az</span> <span class=n>acr</span> <span class=n>show</span> <span class=n>-n</span> <span class=n>myacr</span> <span class=p>-</span><span class=n>-query</span> <span class=n>loginServer</span><span class=p>)</span>
+
+<span class=c># 新建一个命名空间, 便于留用Cluster 的 Clean up.</span>
+<span class=c># kubectl create namespace acr</span>
+<span class=c># kubectl config set-context --current --namespace acr</span>
+
+<span class=c># 创建一个deployment</span>
+<span class=n>kubectl</span> <span class=n>create</span> <span class=n>deployment</span> <span class=n>nginx</span> <span class=p>-</span><span class=n>-image</span><span class=p>=</span><span class=nv>$loginServer</span><span class=p>/</span><span class=n>nginx</span><span class=err>:</span><span class=n>v1</span>
+
+<span class=c># 检查部署是否成功, 得到 Access Denied Error</span>
+<span class=n>kubectl</span> <span class=n>get</span> <span class=n>deployment</span>
+<span class=n>kubectl</span> <span class=n>get</span> <span class=n>pods</span>
+<span class=n>kubectl</span> <span class=n>describe</span> <span class=n>pod</span> <span class=p>(</span><span class=n>kubectl</span> <span class=n>get</span> <span class=n>pods</span> <span class=n>-o</span><span class=p>=</span><span class=n>jsonpath</span><span class=p>=</span><span class=s1>&#39;{.items[0].metadata.name}&#39;</span><span class=p>)</span>
+
+<span class=c># 解决以上问题，需要将ACR附加到AKS群集（也可以在创建时完成）</span>
+<span class=n>kubectl</span> <span class=n>delete</span> <span class=n>deployment</span> <span class=n>nginx</span>
+<span class=n>az</span> <span class=n>aks</span> <span class=n>update</span> <span class=n>-n</span> <span class=n>CSCluster</span> <span class=n>-g</span> <span class=n>Kubernetes-Cloud</span> <span class=p>-</span><span class=n>-attach-acr</span> <span class=n>myacr</span>
+
+<span class=c># 再次部署deployment，成功</span>
+<span class=n>kubectl</span> <span class=n>create</span> <span class=n>deployment</span> <span class=n>nginx</span> <span class=p>-</span><span class=n>-image</span><span class=p>=</span><span class=nv>$loginServer</span><span class=p>/</span><span class=n>nginx</span><span class=err>:</span><span class=n>v1</span>
+<span class=n>kubectl</span> <span class=n>get</span> <span class=n>deployment</span><span class=p>,</span><span class=n>pods</span>
+</code></pre></td></tr></table></div></div><h1 id=clean-up>Clean up</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ az aks delete --resource-group <span class=s2>&#34;Kubernetes-Cloud&#34;</span> --name CSCluster <span class=c1>#--yes --no-wait</span>
 Are you sure you want to perform this operation? <span class=o>(</span>y/n<span class=o>)</span>: y
 <span class=c1># if used -no-wait option, it will delete in the back ground. Verify like this:</span>
 <span class=c1># az aks show --resource-group &#34;Kubernetes-Cloud&#34; --name CSCluster</span>
