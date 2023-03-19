@@ -1,8 +1,6 @@
 # About
 
 
-Welcome to my blog! I am an IT professional with a few decades of experience in the field and tons of thing to learn.
-
 # CLI, not GUI
 
 CLI is the ONLY desktop for IT professionals as it allows for efficient and precise execution of tasks, plus small text documentation without screen shots.  
