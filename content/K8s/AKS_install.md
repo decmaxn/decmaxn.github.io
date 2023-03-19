@@ -27,15 +27,15 @@ $ az aks create \
     --resource-group "Kubernetes-Cloud" \
     --generate-ssh-keys \
     --name CSCluster \
-    --kubernetes-version 1.25.5 \ # no need to 
-    --node-count 3 #default Node count is 3
+    --kubernetes-version 1.25.5 \
+    --node-count 1 #default Node count is 3
 ```
 or
 ```powershell
 az login
 az account set -s "Visual Studio Professional Subscription"
 
-# Create an RG and AKS cluster first
+# default Node count is 3
 az group create -l eastus -n Kubernetes-Cloud
 az aks create -g Kubernetes-Cloud -n CSCluster --generate-ssh-keys
 ```
@@ -123,12 +123,128 @@ az aks update -n CSCluster -g Kubernetes-Cloud --attach-acr myacr
 kubectl create deployment nginx --image=$loginServer/nginx:v1
 kubectl get deployment,pods
 ```
+# Storage Class
 
+```bash
+$ kubectl get storageclasses.storage.k8s.io default 
+NAME                PROVISIONER          RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+default (default)   disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   11m
+$ kubectl describe storageclasses.storage.k8s.io default 
+Name:                  default
+IsDefaultClass:        Yes   # 
+Annotations:           storageclass.kubernetes.io/is-default-class=true
+Provisioner:           disk.csi.azure.com
+Parameters:            skuname=StandardSSD_LRS  # Different with other classes, refer to below managed-premium
+AllowVolumeExpansion:  True
+MountOptions:          <none>
+ReclaimPolicy:         Delete  #
+VolumeBindingMode:     WaitForFirstConsumer
+Events:                <none>
+$ kubectl describe storageclasses.storage.k8s.io managed-premium | grep Parameter
+Parameters:            cachingmode=ReadOnly,kind=Managed,storageaccounttype=Premium_LRS
+$ cat <<EOF > azure_disk.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-azure-managed  #
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-azdisk-deployment
+spec:  
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+      - name: webcontent
+        persistentVolumeClaim:
+          claimName: pvc-azure-managed  # 
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: webcontent
+          mountPath: "/usr/share/nginx/html/web-app"
+EOF
+$ kubectl apply -f azure_disk.yaml 
+
+$ kubectl get PersistentVolume 
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                       STORAGECLASS      REASON   AGE
+pvc-01042b9c-aa58-4d4e-ac9a-9497135c7f58   10Gi       RWO            Delete           Bound    default/pvc-azure-managed   managed-premium            4m53s
+$ kubectl get pvc
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+pvc-azure-managed   Bound    pvc-01042b9c-aa58-4d4e-ac9a-9497135c7f58   10Gi       RWO            managed-premium   5m7s
+$ kubectl get pod
+NAME                                       READY   STATUS    RESTARTS   AGE
+nginx-azdisk-deployment-65cd8f669c-2bss2   1/1     Running   0          5m15s
+$ kubectl exec -it deployments/nginx-azdisk-deployment -- /bin/bash
+root@nginx-azdisk-deployment-65cd8f669c-2bss2:/# lsblk | grep nginx
+sdc       8:32   0    10G  0 disk /usr/share/nginx/html/web-app
+```
+## Customized Storage Class
+Need to refer to Provider ( Azure in this case) document to get all those parameters right.
+```bash
+$ kubectl delete deployment nginx-azdisk-deployment
+$ kubectl delete PersistentVolumeClaim pvc-azure-managed
+vma@hpeb:~/decmaxn.github.io$ cat <<EOF > custom-storage-class-azure.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: managed-standard-ssd
+parameters:
+  cachingmode: ReadOnly
+  kind: Managed
+  storageaccounttype: StandardSSD_LRS
+provisioner: kubernetes.io/azure-disk
+EOF
+vma@hpeb:~/decmaxn.github.io$ kubectl apply -f custom-storage-class-azure.yaml 
+storageclass.storage.k8s.io/managed-standard-ssd created
+vma@hpeb:~/decmaxn.github.io$ kubectl get storageclasses.storage.k8s.io   | grep managed-standard-ssd
+managed-standard-ssd    kubernetes.io/azure-disk   Delete          Immediate              false                  32s
+vma@hpeb:~/decmaxn.github.io$ diff azure_disk.yaml custom_azure_disk.yaml   # Just change the storage class in my previous pvc and deployment.
+8c8
+<   storageClassName: managed-premium
+---
+>   storageClassName: managed-standard-ssd
+vma@hpeb:~/decmaxn.github.io$ kubectl apply -f custom_azure_disk.yaml 
+persistentvolumeclaim/pvc-azure-managed created
+deployment.apps/nginx-azdisk-deployment created
+
+# Only the storage class changed, nothing else.
+vma@hpeb:~/decmaxn.github.io$ kubectl get PersistentVolume 
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                       STORAGECLASS           REASON   AGE
+pvc-54e34adf-441e-465d-865b-6a1d8f38ddce   10Gi       RWO            Delete           Bound    default/pvc-azure-managed   managed-standard-ssd            15s
+vma@hpeb:~/decmaxn.github.io$  kubectl get pvc
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+pvc-azure-managed   Bound    pvc-54e34adf-441e-465d-865b-6a1d8f38ddce   10Gi       RWO            managed-standard-ssd   61s
+vma@hpeb:~/decmaxn.github.io$  kubectl exec -it deployments/nginx-azdisk-deployment -- /bin/bash
+root@nginx-azdisk-deployment-65cd8f669c-mgttz:/# lsblk | grep nginx
+sdc       8:32   0    10G  0 disk /usr/share/nginx/html/web-app
+```
 # Clean up
 ```bash
+$ kubectl delete deployment nginx-azdisk-deployment
+$ kubectl delete PersistentVolumeClaim pvc-azure-managed
+$ az acr delete -n myacr -g Kubernetes-Cloud
 $ az aks delete --resource-group "Kubernetes-Cloud" --name CSCluster #--yes --no-wait
 Are you sure you want to perform this operation? (y/n): y
 # if used -no-wait option, it will delete in the back ground. Verify like this:
 # az aks show --resource-group "Kubernetes-Cloud" --name CSCluster
-$ az acr delete -n myacr -g Kubernetes-Cloud
+
 ```
