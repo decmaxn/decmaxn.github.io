@@ -198,7 +198,7 @@ Need to refer to Provider ( Azure in this case) document to get all those parame
 ```bash
 $ kubectl delete deployment nginx-azdisk-deployment
 $ kubectl delete PersistentVolumeClaim pvc-azure-managed
-vma@hpeb:~/decmaxn.github.io$ cat <<EOF > custom-storage-class-azure.yaml
+$ cat <<EOF > custom-storage-class-azure.yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -209,27 +209,27 @@ parameters:
   storageaccounttype: StandardSSD_LRS
 provisioner: kubernetes.io/azure-disk
 EOF
-vma@hpeb:~/decmaxn.github.io$ kubectl apply -f custom-storage-class-azure.yaml 
+$ kubectl apply -f custom-storage-class-azure.yaml 
 storageclass.storage.k8s.io/managed-standard-ssd created
-vma@hpeb:~/decmaxn.github.io$ kubectl get storageclasses.storage.k8s.io   | grep managed-standard-ssd
+$ kubectl get storageclasses.storage.k8s.io   | grep managed-standard-ssd
 managed-standard-ssd    kubernetes.io/azure-disk   Delete          Immediate              false                  32s
-vma@hpeb:~/decmaxn.github.io$ diff azure_disk.yaml custom_azure_disk.yaml   # Just change the storage class in my previous pvc and deployment.
+$ diff azure_disk.yaml custom_azure_disk.yaml   # Just change the storage class in my previous pvc and deployment.
 8c8
 <   storageClassName: managed-premium
 ---
 >   storageClassName: managed-standard-ssd
-vma@hpeb:~/decmaxn.github.io$ kubectl apply -f custom_azure_disk.yaml 
+$ kubectl apply -f custom_azure_disk.yaml 
 persistentvolumeclaim/pvc-azure-managed created
 deployment.apps/nginx-azdisk-deployment created
 
 # Only the storage class changed, nothing else.
-vma@hpeb:~/decmaxn.github.io$ kubectl get PersistentVolume 
+$ kubectl get PersistentVolume 
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                       STORAGECLASS           REASON   AGE
 pvc-54e34adf-441e-465d-865b-6a1d8f38ddce   10Gi       RWO            Delete           Bound    default/pvc-azure-managed   managed-standard-ssd            15s
-vma@hpeb:~/decmaxn.github.io$  kubectl get pvc
+$  kubectl get pvc
 NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
 pvc-azure-managed   Bound    pvc-54e34adf-441e-465d-865b-6a1d8f38ddce   10Gi       RWO            managed-standard-ssd   61s
-vma@hpeb:~/decmaxn.github.io$  kubectl exec -it deployments/nginx-azdisk-deployment -- /bin/bash
+$  kubectl exec -it deployments/nginx-azdisk-deployment -- /bin/bash
 root@nginx-azdisk-deployment-65cd8f669c-mgttz:/# lsblk | grep nginx
 sdc       8:32   0    10G  0 disk /usr/share/nginx/html/web-app
 ```
