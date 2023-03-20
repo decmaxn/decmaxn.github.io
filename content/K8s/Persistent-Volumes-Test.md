@@ -233,5 +233,3 @@ Hello from our NFS mount!!!
 ```
 Retain means the data is important, and K8s won't automatically clean it up.
 
-# Dynamic Provisioning with Storage Class
-
