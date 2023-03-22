@@ -1,6 +1,6 @@
 ---
 title: "EnvVar_Secret"
-date: 2023-03-20T20:21:11-04:00
+date: 2023-03-19T20:21:11-04:00
 draft: false
 tags: ["K8s","course"]
 ---
