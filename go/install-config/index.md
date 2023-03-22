@@ -1,13 +1,16 @@
-# Install Config
+# Install_and_Config
 
 
-# Installation
+## Installation
 
 download [Go itself](https://go.dev/dl/) for windows and install, confirm with ```go version``` after. 
 ```
 go version go1.20.1 windows/amd64
 ```
-## Use "go help doc" for more information about doc command
+
+## Configuration
+
+### Use "go help doc" for more information about doc command
 ```
 > go doc json.Decoder.Decode
 package json // import "encoding/json"
@@ -21,6 +24,7 @@ func (dec *Decoder) Decode(v any) error
 ```
 json package, Decoder object within json package, and Decode method on that Decoder object.
 
+### IDE
 
 Install vscode using choco and confirmed with ```choco list -l```
 ```
@@ -28,7 +32,7 @@ vscode 1.70.1
 vscode.install 1.70.1
 ```
 
-After installing golang.go extension.  Got a prompt to install the gopls and go-ouitline. 
+After installing golang.go extension.  Got a prompt to install the gopls and go-ouitline.
 
 ```bash
 code --install-extension golang.go 
@@ -42,7 +46,11 @@ Now, try creat a hello world program and try to features of those tool
 4. save this file to see it added import "fmt"
 5. start a terminal and use go run . to see it runs properly.
 
-Also create a project and try it.
+### GOPATH
+
+This is where the packages live, weather download with go get command or created by your self.
+
+Since Go 1.11, you don't have to use GOPATH anymore. Simply go to your project directory and do this once: 
 
 ```bash
 $ go mod init github.com/decmaxn/goLab
@@ -50,3 +58,13 @@ go: creating new go.mod: module github.com/decmaxn/goLab
 $ go run github.com/decmaxn/goLab
 Hello world!
 ```
+For older version of Go, you need to set and export it. To be compatible with old packages, it's BEST to set it.
+
+```bash
+$ tail -3 ~/.bashrc 
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+```
+After the $GOPATH in place, you can go get another package online, like the command example above.
+

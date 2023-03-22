@@ -1,7 +1,9 @@
 # Var_primitives_pointer
 
 
-# Declaring var with Primitive Data Types
+## Declaring var with Primitive Data Types
+Primitive Data Types 指的是一些基本的数据类型，这些类型不依赖于其他类型，是构成更复杂的数据类型的基础
+
 Easy to understand way:
 ```go
 	var num int
@@ -22,20 +24,29 @@ Normal way:
 ```
 declaring multiple vars at the same time
 ```go
-	// Declare three integer variables named "x", "y", and "z" with initial values of 1, 2, and 3, respectively
+	// Declare three integer variables named "x", "y", and "z" with initial values of 1, 2, and 3, respectively. GO简介的特色！
 	x, y, z := 1, 2, 3
 	fmt.Println(x, y, z)
 	// var x, y, z int = 1, 2, 3
 	x, y, z := 1, "hello", true
 	fmt.Println(x, y, z)
 ```
+### 显示转换 and 类型推到
 
-# Pointers
+```go
+num := 11
+float64 := float64(num)
+// 隐式转换导致容易混淆
+var i int
+j := i // j is a int from i
+```
+
+## Pointers
 Like in python, big and complex objects are natively pointer, like Slice, Map, Function. Small of simple objects are not, like int, bool, string, array.
 
 Go has a interesting feature to expose this machenisim. For example, declare a var "prt" point to a string variable.
 ```go
-    var prt *string // * is pointer operator 
+    var prt *string // *string is a type 
 	fmt.Println(prt)
     // <nil>  This is an empty pointer, since prt has not been initiallized
     var greeting string = "hello"

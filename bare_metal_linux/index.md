@@ -39,7 +39,7 @@ sudo hostnamectl set-hostname [NEW_HOSTNAME]
 ```
 
 ### Download public key from github 
-`#``bash
+```bash
 $ curl https://api.github.com/users/decmaxn/keys  | jq -r .[].key | tee .ssh/authorized_keys
 ```
 
