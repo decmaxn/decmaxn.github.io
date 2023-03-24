@@ -44,7 +44,7 @@ Slice from an array, or another slice
 
 Since most of time you work with slice only, you don't really care about array under it as long as it is managed for you.
 ```go
-	slice := []int{1, 2, 3} // note you didn't mention size
+	slice := []int{1, 2, 3} // note for slice, you don't mention size
 	fmt.Println(slice)
     // [1 2 3]
 	slice = append(slice, 4, 5) // what happen if run out of space
@@ -52,3 +52,10 @@ Since most of time you work with slice only, you don't really care about array u
     // [1 2 3 4 5]
 ```
 Go will copy the array to anohter place if it run out of continues space, we don't need to worry about that under normal circumstances. 
+
+声明一个切片时，可以使用以下方式之一：
+```go
+    slice := []int{} // 声明空的切片
+    var slice []int // 使用 var 关键字声明一个 nil 切片(一个未分配底层数组的切片,这意味着在使用 nil 切片之前必须将其make初始化)
+    slice := make([]int, 5, 10) // 使用 make 函数创建一个长度为 5，容量为 10 的切片. 容量表示底层数组的长度
+```
