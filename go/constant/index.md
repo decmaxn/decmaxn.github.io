@@ -12,7 +12,7 @@ Normal side of Go constant:
 	const pi = 3 // type not assigned
 	fmt.Println(pi)  // pi is treated as int
     fmt.Println(pi + 0.14) // pi is treated as float
-	pi = 3.1415 // you can NOT　change value of a constant
+	pi = 3.1415 // you can NOT　change value of a constant 与VAR的区别
     //./main.go:10:5: cannot assign to pi
 ```
 
