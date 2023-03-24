@@ -28,7 +28,7 @@ Normal way:
 ```
 declaring multiple vars at the same time
 ```go
-	// Declare three integer variables named "x", "y", and "z" with initial values of 1, 2, and 3, respectively. GO简介的特色！
+	// Declare three integer variables named "x", "y", and "z" with initial values of 1, 2, and 3, respectively. GO简洁的特色！
 	x, y, z := 1, 2, 3
 	fmt.Println(x, y, z)
 	// var x, y, z int = 1, 2, 3

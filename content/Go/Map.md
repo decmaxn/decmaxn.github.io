@@ -7,7 +7,9 @@ tags: ["coding","Go","course"]
 
 # Map
 
-Map can store any types key and value pairs, there is no order. There is no fixed size, and you can tell it's a pointer.
+Map can store any types key and value pairs, there is no order. There is no fixed size, so you can tell it's a pointer.
+
+Key 不能是复杂的，不能比较的type.
 
 We have to give map key word to tell it's type, it's not like this before. Follow that is key type in [] and value type.
 

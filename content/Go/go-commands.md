@@ -47,3 +47,23 @@ test command can run all *_test.go in the folder.
 
 ### vet
 Find error which can pass build phrase without error out. For example, a boolean check will always return true or false.
+
+ ```bash
+ $ cat <<EOF > main.go
+> package main
+> 
+> import (
+>         "fmt"
+> )
+> 
+> func main() {
+>         name := "testing"
+>         fmt.Printf("%d\n", name)
+>         fmt.Printf("%s\n", name, name)
+> }
+> EOF
+$ go vet main.go
+# command-line-arguments
+./main.go:9:9: Printf format %d has arg name of wrong type string
+./main.go:10:9: Printf call needs 1 arg but has 2 args
+```
