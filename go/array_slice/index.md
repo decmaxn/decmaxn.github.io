@@ -51,7 +51,10 @@ Go will copy the array to anohter place if it run out of continues space, we don
 
 声明一个切片时，可以使用以下方式之一：
 ```go
-    slice := []int{} // 声明空的切片
-    var slice []int // 使用 var 关键字声明一个 nil 切片(一个未分配底层数组的切片,这意味着在使用 nil 切片之前必须将其make初始化)
-    slice := make([]int, 5, 10) // 使用 make 函数创建一个长度为 5，容量为 10 的切片. 容量表示底层数组的长度
+	// 声明空的切片
+    slice := []int{} 
+	// 使用 var 关键字声明一个 nil 切片(一个未分配底层数组的切片,这意味着在使用 nil 切片之前必须将其make初始化)
+    var slice []int 
+	// 使用 make 函数创建一个长度为 5，容量为 10 的切片. 容量表示底层数组的长度
+    slice := make([]int, 5, 10) 
 ```
