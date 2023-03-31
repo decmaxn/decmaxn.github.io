@@ -8,7 +8,7 @@ tags: ["coding","Go","course"]
 ## Declaring var with Primitive Data Types
 Primitive Data Types 指的是一些基本的数据类型，这些类型不依赖于其他类型，是构成更复杂的数据类型的基础
 
-Easy to understand way:
+函数外的每个语句都必须以关键字开始(var, func 等等)
 ```go
 	var num int
 	num = 11
@@ -19,8 +19,10 @@ Esay to write way:
 	var num int = 11
 	var greeting string = "Hello"
 	fmt.Println(num, greeting)
+	// 如果初始化值已存在，则可以省略类型;变量会从初始值中获得类型
+	var i,j = 1,2
 ```
-Normal way:
+在函数中，简洁赋值语句 := 可在类型明确的地方代替 var 声明。
 ```go
 	num := 11
 	greeting := "Hello"

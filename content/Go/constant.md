@@ -5,7 +5,9 @@ draft: false
 tags: ["coding","Go","course"]
 ---
 
-# Normal features of Go constant
+## 声明
+
+const identifier type = value
 
 Normal side of Go constant:
 1. declare and assign at the same time, can not be done separately. 
@@ -16,12 +18,25 @@ Normal side of Go constant:
 	const pi = 3 // type not assigned
 	fmt.Println(pi)  // pi is treated as int
     fmt.Println(pi + 0.14) // pi is treated as float
-	pi = 3.1415 // you can NOT　change value of a constant 与VAR的区别
+	pi = 3.1415 // you can NOT　change value of a constant（这是与VAR的区别）
     //./main.go:10:5: cannot assign to pi
 ```
 
+## 在K8s中用法示例： 类型重命名
 
-# Iota
+These list of const have been limited to a new string type "ServiceType", so you will never have a typo on the strings. 
+
+```go
+type ServiceType string
+
+const (
+	ServiceTypeClusterIP ServiceType = "ClusterIP"
+	ServiceTypeNodePort ServiceType = "NodePort"
+	ServiceTypeLoadBalancer ServiceType = "LoadBalancer"
+	ServiceTypeExternalName ServiceType = "ExternalName"
+)
+```
+## Iota
 
 Constant block, you can have multiple of them and iota will start from 0 in each block.
 ```go
