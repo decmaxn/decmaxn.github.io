@@ -51,7 +51,7 @@ const (
 	Monday    = iota // 0 iota starts at 0 and increase by 1 every time it is used
 	Tuesday          // 1 reuse the constant expression above, 
 	Wednesday        // 2 which is simply iota
-	Thursday         // 3
+	Thursday         // 3 其实就是行数
 	Friday           // 4
 	Saturday         // 5
 	Sunday           // 6
@@ -68,3 +68,7 @@ const (
 )
 ```
 The purpose of iota is for convinient.
+
+## 跨包全局常量（或变量）
+
+名字首字母大写即可
