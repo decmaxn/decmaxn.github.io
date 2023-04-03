@@ -2,7 +2,7 @@
 title: "Devcontainer Space Issue"
 date: 2023-04-02T17:53:32-04:00
 draft: false
-tags = ["vscode","Docker","devcontainer"]
+tags: ["vscode","Docker","devcontainer"]
 ---
 
 ## Failed to start devcontainer - no space left on device
@@ -32,7 +32,7 @@ $ docker images --format '{{.ID}}: {{.Size}}'
 25e71947e2a3: 1.98GB
 25e71947e2a3: 1.98GB
 ```
-### Dangous system prune --volumes
+### dangerous system prune --volumes
 
 Note it will delete all stopped containers, and since there is no more containers, it will continue to delete all volumes (because they are not used by at least one container).  It will also delete all build cache of course, so you end up have to rebuild all your containers, and lost all data in devconainers which not added by yourself, excpet you the repo you have pushed up.
 

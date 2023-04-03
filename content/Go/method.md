@@ -1,6 +1,6 @@
 ---
 title: "Method"
-date: 2023-3-28T22:35:58-04:00
+date: 2023-03-28T22:35:58-04:00
 draft: false
 tags: ["coding","Go","course"]
 ---

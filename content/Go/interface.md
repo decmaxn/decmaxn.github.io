@@ -1,19 +1,19 @@
 ---
 title: "Interface"
-date: 2023-3-29T22:35:58-04:00
+date: 2023-03-29T22:35:58-04:00
 draft: false
 tags: ["coding","Go","course"]
 ---
 
 ## An examle of Interface
 
-    接口（interface）在 Go 语言中是一种类型, 它定义了一组方法的集合.
-    如果某个类型实现了接口中定义的所有方法，那么该类型就可以被认为是实现了该接口。
-    实际上就是方法的抽象
+接口（interface）在 Go 语言中是一种类型, 它定义了一组方法的集合.
+如果某个类型实现了接口中定义的所有方法，那么该类型就可以被认为是实现了该接口。
+实际上就是方法的抽象
 
 ```go
 
-//定义一个名为 Shape 的接口，它包含了一个计算面积的方法 Area
+//定义一个名为 Shape 的接口类型，它包含了一个计算面积的方法 Area
 type Shape interface {
     Area() float64
     // 接口是一组方法的签名（signature）集合
@@ -59,10 +59,17 @@ func main() {
 
 ```
 
-
 1. Struct 除了实现 interface定义的接口外，还可以有其他方法。
 1. 所以，一个Struct可实现多个接口
+1. 接口不接受属性定义, 因为它是一种行为描述，而不是属性描述
+1. 接口可以嵌套以他接口. 此例中任何实现了 Mammal 接口的类型都必须同时实现 Animal 接口中的 Speak() 方法。
+    ```go
+    type Animal interface {
+        Speak() string
+    }
 
-1. 接口不接受属性定义
-
-1. 接口可以嵌套以他接口
+    type Mammal interface {
+        Animal  // Mammal 接口嵌套了 Animal 接口
+        Eat() string
+    }
+    ```
