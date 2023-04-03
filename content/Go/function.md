@@ -101,6 +101,10 @@ Call it with multiple 参数
 mySlice := []String{}
 mySlice = append(mySlice, "a", "1", "c")
 ```
+
+## 内置函数
+不需要package name, 比如 close(), len() 等等。
+
 ## Callback 回调函数
 函数作为另一个函数的参数， 并在这个函数内部被调用。
 ```go
@@ -118,16 +122,17 @@ func decrease(a, b int) {
 	println("Decrease result is:", a-b)
 }
 ```
-## 闭包 （匿名函数）
+应用实例，比如遍历树节点，根据节点不同而采用不同的逻辑（function）处理这个节点。
 
-函数也是一种数据类型，因为它虽然不是变量，但是存在于内存中的地址块。
-函数名的本质是一个指向其内存地址的指针常量。
+## 闭包 （匿名函数）
 
  1. 不能独立存在，只能存在于其他函数中
  1. 可以赋值给其他变量 ```x:=func(){}```，其实就是声明
+ 	函数也是一种数据类型，因为它虽然不是变量，但是存在于内存中的地址块。函数名的本质是一个指向其内存地址的指针常量。
  1. 可以直接掉用```func(x,y int){println(x+y)}(1,2)```
-	注意直接调用是在声明的后面加上参数
+	注意直接调用是在声明的后面加上参数，其实就是 invoke 的格式。 
+	function 不等同于 invoke function
  1. 可以作为函数返回值 ```func Add()(func(b int) int)```
 
-function != invoke function
+
 
