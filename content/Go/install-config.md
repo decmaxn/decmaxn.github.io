@@ -50,6 +50,8 @@ Now, try creat a hello world program and try to features of those tool
 4. save this file to see it added import "fmt"
 5. start a terminal and use go run . to see it runs properly.
 
+Suggest to install ```go  code --install-extension formulahendry.code-runner```, this way you can run go file with an shortcut.
+
 ### GOPATH
 
 This is where the packages live, weather download with go get command or created by your self.
