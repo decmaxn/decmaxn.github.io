@@ -1,4 +1,4 @@
-# Map
+# collections
 
 
 ## Map
@@ -6,6 +6,8 @@
 Map can store any types key and value pairs, there is no order. There is no fixed size, so you can tell it's a pointer.
 
 Key 不能是复杂的，不能比较的type.
+
+### 声明
 
 We have to give map key word to tell it's type, it's not like this before. Follow that is key type in [] and value type.
 
@@ -24,6 +26,21 @@ We have to give map key word to tell it's type, it's not like this before. Follo
 	fmt.Println(m["foo"])
     // 0 Access a non-exist key will return 0, so check your return
 ```
+
+下面声明会报错panic: assignment to entry in nil map， 意为向 nil map 中赋值，这是不允许的操作。
+```go
+// 变量 m 被声明为一个 map 类型，但一个 nil 的 map 并没有被分配任何的内存
+	var m map[string]int
+	m["foo"] = 42
+```
+在 Go 中，一个 nil 的 map 并没有被分配任何的内存，因此不能直接进行操作，否则会导致运行时 panic。
+
+为了解决这个问题，你需要先使用 make 函数来分配内存:
+```go
+	m := make(map[string]int)
+	m["foo"] = 42
+```
+
 ### 取值
 ```go
 	value, exists := m["bar"] // map[key] 实际上返回 两个值， 第二个boolean表示是否存在。

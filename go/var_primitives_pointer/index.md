@@ -48,17 +48,19 @@ Like in python, big and complex objects are natively pointer, like Slice, Map, F
 
 Go has a interesting feature to expose this machenisim. For example, declare a var "prt" point to a string variable.
 ```go
-    var prt *string // *string is a type 
+	// 这里用 地址变量类型 *Type 声明 prt
+    var prt *string // *string is an example of type 
 	fmt.Println(prt)
     // <nil>  This is an empty pointer, since prt has not been initiallized
     var greeting string = "hello"
+	// 这里用 取址符 & 给 prt 赋值
 	prt = &greeting // & is "address operator". 
 	fmt.Println(prt)
     // 0xc0000741e0  address of greet var
 ```
 Using dereference operator in '*prt' expression access the varlue of string var "greeting".
 ```go
-    *prt = "world"  // * is dereference operator 
+    *prt = "world"  // * is dereference operator 取值符
 	fmt.Println(greeting)
     // world  - no longer hello
 ```
@@ -69,10 +71,16 @@ However, if you haven't initialize prt var, it's going to fail.
 	fmt.Println(*prt2)
     // panic: runtime error: invalid memory address or nil pointer dereference
 ```
-One way to fix it without create a string var is:
+One way to fix it without create a string var is 使用new 函数创建一个新的变量，并返回其指针.
+
+但是，该内存块并没有初始化，所以它返回的是该类型的零值，比如这里对于string类型，应该返回空格。
+
 ```go
 	var prt2 *string = new(string)
-	*prt2 = "world"
+	*prt2 = "world" // 这里给地址变量prt取值后改变这个值
 	fmt.Println(*prt2)
 ```
-Since pointer arithmetic is dangous, Go doesn't allow it.
+
+
+###  Go doesn't allow pointer arithmetic
+Since it is dangous

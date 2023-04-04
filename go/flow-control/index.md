@@ -46,7 +46,7 @@ func main() {
         // This is a blank branch 空分枝
     case "pear":
         fmt.Println("This is a pear.")
-        fallthrough // This will cause the next case to be executed
+        fallthrough // 穿透 will cause the next case to be executed
     case "peach":
         fmt.Println("This is a peach.")
     default:
@@ -65,6 +65,7 @@ This is a pear.
 This is a peach. 
 ```
 ## for loop
+
 ```go
 package main
 
@@ -81,7 +82,7 @@ func main() {
 
 }
 ```
-## for-range
+###  for-range
 ```go
 package main
 
@@ -98,3 +99,10 @@ func main() {
 
 }
 ```
+
+### break and continue
+1. break: jump out the loop
+1. continue: jump to next item
+
+## lable and goto
+Not suggested since it's confusing.

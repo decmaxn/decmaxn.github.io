@@ -58,3 +58,14 @@ Go will copy the array to anohter place if it run out of continues space, we don
 	// 使用 make 函数创建一个长度为 5，容量为 10 的切片. 容量表示底层数组的长度
     slice := make([]int, 5, 10) 
 ```
+
+# Make and New
+
+1. new return pointer
+1. Make return the first(?) element. 
+
+```go
+slice := make([]int, 5, 10)
+fmt.Println(slice, &slice[0])
+// [0 0 0 0 0] 0xc0000b2000
+```
