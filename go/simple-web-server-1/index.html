@@ -1,0 +1,170 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Simple Web Server 1 - Victor Ma</title><meta name=Description content="Victro Ma's blog"><meta property="og:title" content="Simple Web Server 1"><meta property="og:description" content="Simple web API server to put everything together main.go
+1 2 3 4 5 6 7 8 9 10 11 12  package main import ( &#34;net/http&#34; &#34;github.com/pluralsight/webservice/controllers&#34; ) func main() { controllers.RegisterControllers() http.ListenAndServe(&#34;:3000&#34;, nil) }   controllers/front.go
+1 2 3 4 5 6 7 8 9 10 11  package controllers import &#34;net/http&#34; func RegisterControllers() { uc := newUserController() // uc 是一个指向 userController 结构体的指针类型，因此需要使用 *uc 表示 uc 所指向的实际对象。  // 使用 *uc 就是为了将 uc 指针类型转换为 Handler 接口类型。  http."><meta property="og:type" content="article"><meta property="og:url" content="https://decmaxn.github.io/go/simple-web-server-1/"><meta property="og:image" content="https://decmaxn.github.io/logo.png"><meta property="article:published_time" content="2023-04-04T23:17:25-04:00"><meta property="article:modified_time" content="2023-04-05T23:25:00-04:00"><meta property="og:site_name" content="Victor Ma"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://decmaxn.github.io/logo.png"><meta name=twitter:title content="Simple Web Server 1"><meta name=twitter:description content="Simple web API server to put everything together main.go
+1 2 3 4 5 6 7 8 9 10 11 12  package main import ( &#34;net/http&#34; &#34;github.com/pluralsight/webservice/controllers&#34; ) func main() { controllers.RegisterControllers() http.ListenAndServe(&#34;:3000&#34;, nil) }   controllers/front.go
+1 2 3 4 5 6 7 8 9 10 11  package controllers import &#34;net/http&#34; func RegisterControllers() { uc := newUserController() // uc 是一个指向 userController 结构体的指针类型，因此需要使用 *uc 表示 uc 所指向的实际对象。  // 使用 *uc 就是为了将 uc 指针类型转换为 Handler 接口类型。  http."><meta name=application-name content="Victor Ma"><meta name=apple-mobile-web-app-title content="Victor Ma"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://decmaxn.github.io/go/simple-web-server-1/><link rel=prev href=https://decmaxn.github.io/go/reflect/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Simple Web Server 1","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/decmaxn.github.io\/go\/simple-web-server-1\/"},"image":["https:\/\/decmaxn.github.io\/images\/Apple-Devices-Preview.png"],"genre":"Go","keywords":"coding, Go, course","wordcount":319,"url":"https:\/\/decmaxn.github.io\/go\/simple-web-server-1\/","datePublished":"2023-04-04T23:17:25-04:00","dateModified":"2023-04-05T23:25:00-04:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"xxxx","logo":"https:\/\/decmaxn.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"Victor Ma"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/python/>Python </a><a class=menu-item href=/go/>Go </a><a class=menu-item href=/k8s/>K8s </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/about/>About </a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/>Posts</a><a class=menu-item href=/python/>Python</a><a class=menu-item href=/go/>Go</a><a class=menu-item href=/k8s/>K8s</a><a class=menu-item href=/tags/>Tags</a><a class=menu-item href=/about/>About</a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Simple Web Server 1</h1><div class=content id=content><h2 id=simple-web-api-server-to-put-everything-together>Simple web API server to put everything together</h2><p>main.go</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=p>(</span>
+        <span class=s>&#34;net/http&#34;</span>
+
+        <span class=s>&#34;github.com/pluralsight/webservice/controllers&#34;</span>
+<span class=p>)</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+        <span class=nx>controllers</span><span class=p>.</span><span class=nf>RegisterControllers</span><span class=p>()</span>
+        <span class=nx>http</span><span class=p>.</span><span class=nf>ListenAndServe</span><span class=p>(</span><span class=s>&#34;:3000&#34;</span><span class=p>,</span> <span class=kc>nil</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>controllers/front.go</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>controllers</span>
+
+<span class=kn>import</span> <span class=s>&#34;net/http&#34;</span>
+
+<span class=kd>func</span> <span class=nf>RegisterControllers</span><span class=p>()</span> <span class=p>{</span>
+        <span class=nx>uc</span> <span class=o>:=</span> <span class=nf>newUserController</span><span class=p>()</span>
+        <span class=c1>// uc 是一个指向 userController 结构体的指针类型，因此需要使用 *uc 表示 uc 所指向的实际对象。
+</span><span class=c1></span>        <span class=c1>// 使用 *uc 就是为了将 uc 指针类型转换为 Handler 接口类型。
+</span><span class=c1></span>        <span class=nx>http</span><span class=p>.</span><span class=nf>Handle</span><span class=p>(</span><span class=s>&#34;/users&#34;</span><span class=p>,</span> <span class=o>*</span><span class=nx>uc</span><span class=p>)</span>
+        <span class=nx>http</span><span class=p>.</span><span class=nf>Handle</span><span class=p>(</span><span class=s>&#34;/users/&#34;</span><span class=p>,</span> <span class=o>*</span><span class=nx>uc</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>controllers/user.go</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>controllers</span>
+
+<span class=kn>import</span> <span class=p>(</span>
+        <span class=s>&#34;net/http&#34;</span>
+        <span class=s>&#34;regexp&#34;</span>
+<span class=p>)</span>
+
+<span class=kd>type</span> <span class=nx>userController</span> <span class=kd>struct</span> <span class=p>{</span>
+        <span class=nx>userIDPattern</span> <span class=o>*</span><span class=nx>regexp</span><span class=p>.</span><span class=nx>Regexp</span>
+<span class=p>}</span>
+<span class=c1>// userController 结构体定义了一个 ServeHTTP 方法，该方法的签名与 http.Handler 接口的 ServeHTTP 方法的签名完全一致。
+</span><span class=c1>// 这就是在 Go 中实现接口的方式：只要方法的签名与接口定义的方法签名一致，那么该方法就被认为实现了该接口。
+</span><span class=c1></span><span class=kd>func</span> <span class=p>(</span><span class=nx>uc</span> <span class=nx>userController</span><span class=p>)</span> <span class=nf>ServeHTTP</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
+        <span class=c1>// 调用了 http.ResponseWriter 对象的 Write 方法，将字符串 &#34;Hello ...!&#34; 写入到 HTTP 响应中。这个字符串是一个简单的示例
+</span><span class=c1></span>        <span class=nx>w</span><span class=p>.</span><span class=nf>Write</span><span class=p>([]</span><span class=nb>byte</span><span class=p>(</span><span class=s>&#34;Hello from the User Controller!&#34;</span><span class=p>))</span>
+        <span class=c1>// 实际情况下，我们可以在这里执行任何必要的操作，例如：从 models 包中获取用户信息，并将其以 JSON 格式返回给客户端。
+</span><span class=c1></span><span class=p>}</span>
+
+<span class=c1>// 创建一个新的 userController 实例并返回其指针
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>newUserController</span><span class=p>()</span> <span class=o>*</span><span class=nx>userController</span> <span class=p>{</span>
+        <span class=k>return</span> <span class=o>&amp;</span><span class=nx>userController</span><span class=p>{</span>
+                <span class=c1>// 使用 regexp.MustCompile 函数创建了一个新的 *regexp.Regexp 对象，并将其存储在 userController 结构体的 userIDPattern 字段中。
+</span><span class=c1></span>                <span class=nx>userIDPattern</span><span class=p>:</span> <span class=nx>regexp</span><span class=p>.</span><span class=nf>MustCompile</span><span class=p>(</span><span class=s>`^/users/(\d+)/?`</span><span class=p>),</span>
+                <span class=c1>// 在 ServeHTTP 函数中，我们将使用 userIDPattern 字段来解析 URL，从而确定请求中的用户 ID
+</span><span class=c1></span>        <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>models/user.go</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>models</span>
+
+
+<span class=kd>type</span> <span class=nx>User</span> <span class=kd>struct</span> <span class=p>{</span>
+        <span class=nx>ID</span>        <span class=kt>int</span>
+        <span class=nx>FirstName</span> <span class=kt>string</span>
+        <span class=nx>LastName</span>  <span class=kt>string</span>
+<span class=p>}</span>
+
+<span class=c1>// 全局变量是指在所有函数之外声明的变量，它们的作用域是整个程序。
+</span><span class=c1></span><span class=kd>var</span> <span class=p>(</span>
+        <span class=c1>//  users 切片是一个全局变量。
+</span><span class=c1></span>        <span class=c1>// 存储了所有用户的指针。每个指针都指向一个 User 结构体
+</span><span class=c1></span>        <span class=nx>users</span>  <span class=p>[]</span><span class=o>*</span><span class=nx>User</span>
+        <span class=c1>//users 和 nextID 是在 models/user.go 文件的顶部声明的，因此它们是全局变量。
+</span><span class=c1></span>        <span class=nx>nextID</span> <span class=p>=</span> <span class=mi>1</span>
+<span class=p>)</span>
+
+<span class=kd>func</span> <span class=nf>GetUsers</span><span class=p>()</span> <span class=p>[]</span><span class=o>*</span><span class=nx>User</span> <span class=p>{</span>
+        <span class=k>return</span> <span class=nx>users</span>
+<span class=p>}</span>
+
+<span class=c1>//AddUser 函数是向 users 全局变量中添加新用户的函数，其参数为 User 结构体，返回一个 User 结构体和一个 error 类型的值。
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>AddUser</span><span class=p>(</span><span class=nx>u</span> <span class=nx>User</span><span class=p>)</span> <span class=p>(</span><span class=nx>User</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>u</span><span class=p>.</span><span class=nx>ID</span> <span class=p>=</span> <span class=nx>nextID</span>
+        <span class=nx>nextID</span><span class=o>++</span>
+        <span class=c1>//使用 append 函数将一个新的指向 User 结构体的指针添加到 users 中。
+</span><span class=c1></span>        <span class=c1>//这样做可以避免复制 User 结构体的开销，并且可以保证在函数外部修改 users 切片的效果。
+</span><span class=c1></span>        <span class=nx>users</span> <span class=p>=</span> <span class=nb>append</span><span class=p>(</span><span class=nx>users</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>u</span><span class=p>)</span>
+        <span class=c1>// 返回一个新的 User 结构体和 nil 值的 error，表示添加用户操作没有出现任何错误。
+</span><span class=c1></span>        <span class=k>return</span> <span class=nx>u</span><span class=p>,</span> <span class=kc>nil</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></div></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.68.3">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i>LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2012 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Victor Ma</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i></a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
