@@ -1,5 +1,5 @@
 ---
-title: "Free Aws Ec2 Instance"
+title: "Free (almost) Aws Ec2 Instance"
 date: 2023-04-05T18:32:01-04:00
 draft: false
 tags: ["vscode", "AWS", "tips", "dev"]
@@ -9,6 +9,8 @@ tags: ["vscode", "AWS", "tips", "dev"]
 
 Free Trial: Try Amazon EC2 t4g.small instances powered by AWS Graviton2 processors free for up to 750 hours / month until Dec 31st 2023.
 https://aws.amazon.com/blogs/aws/new-t4g-instances-burstable-performance-powered-by-aws-graviton2/
+
+Although the instance is free, but I have been charge a few cents per day under category of "EC2 - Other" for type of EBS:VolumeUsage.gp2. There is no free tier or trail for EBS as far as I know.
 
 Found the latest debian 11 arm64 AMI which could be launched as t4g.small 
 
