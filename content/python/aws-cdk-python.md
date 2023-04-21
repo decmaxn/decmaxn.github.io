@@ -21,10 +21,26 @@ $ cdk --version
 $ python3 --version
 Python 3.8.10
 ```
+Later on I found Node v10.19.0 has reached end-of-life and is not supported.
+```bash
+$ sudo npm install n -g
+/usr/local/bin/n -> /usr/local/lib/node_modules/n/bin/n
++ n@9.1.0
+added 1 package from 2 contributors in 0.442s
+$ sudo n stable
+$ node --version
+v18.16.0
+$ sudo npm install -g npm@latest
+$ sudo npm --version
+9.6.5
+$ sudo npm install -g aws-cdk@latest
+$ cdk --version
+2.76.0 (build 78c411b)
+```
 
 ## New Sample Project
 ```bash
-$ mkdir cdk; cd cdk
+$ rm -rf cdk; mkdir cdk; cd cdk
 /cdk$ cdk init sample-app --language python
 Applying project template sample-app for python
 
