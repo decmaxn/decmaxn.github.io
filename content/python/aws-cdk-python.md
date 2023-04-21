@@ -105,3 +105,34 @@ Executing Creating virtualenv...
 *** Upgrade recommended (npm install -g aws-cdk) ***
 ****************************************************
 ```
+## Test Synthesize and Deploy
+```bash
+/cdk$ source .venv/bin/activate
+(.venv) /cdk$ pip install -r requirements.txt
+/cdk$ cdk synth
+/cdk$ cdk --profile dec bootstrap
+/cdk$ cdk --profile dec deploy
+```
+
+## Clean up
+Remove the queue, topic and subscription from cdk/cdk_stack.py file, then review by diff and deploy to clean up
+```bash
+/cdk$ cdk --profile dec diff
+Stack cdk
+IAM Statement Changes
+┌───┬─────────────────────────┬────────┬─────────────────┬───────────────────────────┬─────────────────────────────────────────────────────────┐
+│   │ Resource                │ Effect │ Action          │ Principal                 │ Condition                                               │
+├───┼─────────────────────────┼────────┼─────────────────┼───────────────────────────┼─────────────────────────────────────────────────────────┤
+│ - │ ${CdkQueueBA7F247D.Arn} │ Allow  │ sqs:SendMessage │ Service:sns.amazonaws.com │ "ArnEquals": {                                          │
+│   │                         │        │                 │                           │   "aws:SourceArn": "${CdkTopic7E7E1214}"                │
+│   │                         │        │                 │                           │ }                                                       │
+└───┴─────────────────────────┴────────┴─────────────────┴───────────────────────────┴─────────────────────────────────────────────────────────┘
+(NOTE: There may be security-related changes not in this list. See https://github.com/aws/aws-cdk/issues/1299)
+
+Resources
+[-] AWS::SQS::Queue CdkQueueBA7F247D destroy
+[-] AWS::SQS::QueuePolicy CdkQueuePolicy9CB1D142 destroy
+[-] AWS::SNS::Subscription CdkQueuecdkCdkTopic33B437C257F995AC destroy
+[-] AWS::SNS::Topic CdkTopic7E7E1214 destroy
+/cdk$ cdk --profile dec deploy
+```
