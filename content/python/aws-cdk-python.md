@@ -136,3 +136,12 @@ Resources
 [-] AWS::SNS::Topic CdkTopic7E7E1214 destroy
 /cdk$ cdk --profile dec deploy
 ```
+
+## Lambda
+
+Create lambda/hello.py and diff, deploy
+
+```bash
+/cdk$ cdk --profile dec diff
+/cdk$ cdk --profile dec deploy
+```
