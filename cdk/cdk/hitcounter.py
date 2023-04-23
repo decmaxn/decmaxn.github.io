@@ -41,3 +41,8 @@ class HitCounter(Construct):
                 'HITS_TABLE_NAME': table.table_name,
             }
         )
+
+        # is not authorized to perform: dynamodb:UpdateItem on resource:
+        table.grant_read_write_data(self._handler)
+        # is not authorized to perform: lambda:InvokeFunction on resource: 
+        downstream.grant_invoke(self._handler)
