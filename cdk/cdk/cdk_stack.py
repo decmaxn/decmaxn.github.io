@@ -5,6 +5,8 @@ from aws_cdk import (
     aws_apigateway as apigw,
 )
 
+from .hitcounter import HitCounter
+
 
 class CdkStack(Stack):
 
@@ -18,7 +20,13 @@ class CdkStack(Stack):
             code=_lambda.Code.from_asset('lambda'),
         )
 
+        hello_with_counter = HitCounter(
+            self, 'HelloHitCounter',
+            downstream=my_lambda,
+        )
+
         apigw.LambdaRestApi(
             self, 'Endpoint',
-            handler=my_lambda,
+            # 将 my_lambda 函数作为 Lambda API 的处理程序，以便 API Gateway 可以将请求路由到该函数。
+            handler=hello_with_counter.handler,
         )
