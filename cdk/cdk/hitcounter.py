@@ -2,6 +2,8 @@ from constructs import Construct
 from aws_cdk import (
     aws_lambda as _lambda,
     aws_dynamodb as ddb,
+    # RemovalPolicy 是 AWS CDK 中用于指定删除策略的模块。
+    RemovalPolicy
 )
 
 
@@ -30,7 +32,10 @@ class HitCounter(Construct):
             # 'Hits'：表示 DynamoDB 表的名称。
             self, 'Hits',
             # partition_key：一个字典，表示 DynamoDB 表的分区键。其中，'name' 表示分区键的名称，'type' 表示分区键的数据类型，此处为字符串类型。
-            partition_key={'name': 'path', 'type': ddb.AttributeType.STRING}
+            partition_key={'name': 'path', 'type': ddb.AttributeType.STRING},
+            # removal_policy：表示表的删除策略，此处为移除所有表的数据。
+            # RemovalPolicy.DESTROY：表示表的删除策略，此处为移除所有表的数据。
+            removal_policy=RemovalPolicy.DESTROY,
         )
         
         #  创建一个名为 _handler 的 Lambda 函数，将其保存到 self._handler 变量中。
