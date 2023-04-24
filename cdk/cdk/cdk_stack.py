@@ -5,6 +5,7 @@ from aws_cdk import (
     aws_apigateway as apigw,
 )
 
+from cdk_dynamo_table_view import TableViewer
 from .hitcounter import HitCounter
 
 
@@ -29,4 +30,10 @@ class CdkStack(Stack):
             self, 'Endpoint',
             # 将 my_lambda 函数作为 Lambda API 的处理程序，以便 API Gateway 可以将请求路由到该函数。
             handler=hello_with_counter.handler,
+        )
+
+        TableViewer(
+            self, 'ViewHitCounter',
+            title='Hello Hits',
+            table=hello_with_counter.table,
         )
