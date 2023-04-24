@@ -1,0 +1,484 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Aws Cdk with Python - Victor Ma</title><meta name=Description content="Victro Ma's blog"><meta property="og:title" content="Aws Cdk with Python"><meta property="og:description" content="Prerequisites The 2.0 version of CDK is compatible with node 10.19.
+1 2 3 4 5 6 7 8 9 10  $ aws --version aws-cli/2.7.13 Python/3.9.11 Linux/5.10.102.1-microsoft-standard-WSL2 exe/x86_64.ubuntu.20 prompt/off $ aws sts --profile dec $ node --version v10.19.0 $ sudo npm install -g aws-cdk@2.0.0 $ cdk --version 2.0.0 (build 4b6ce31) $ python3 --version Python 3.8.10   Later on I found Node v10.19.0 has reached end-of-life and is not supported."><meta property="og:type" content="article"><meta property="og:url" content="https://decmaxn.github.io/python/aws-cdk-python/"><meta property="og:image" content="https://decmaxn.github.io/logo.png"><meta property="article:published_time" content="2023-04-06T20:08:29-04:00"><meta property="article:modified_time" content="2023-04-24T01:01:49-04:00"><meta property="og:site_name" content="Victor Ma"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://decmaxn.github.io/logo.png"><meta name=twitter:title content="Aws Cdk with Python"><meta name=twitter:description content="Prerequisites The 2.0 version of CDK is compatible with node 10.19.
+1 2 3 4 5 6 7 8 9 10  $ aws --version aws-cli/2.7.13 Python/3.9.11 Linux/5.10.102.1-microsoft-standard-WSL2 exe/x86_64.ubuntu.20 prompt/off $ aws sts --profile dec $ node --version v10.19.0 $ sudo npm install -g aws-cdk@2.0.0 $ cdk --version 2.0.0 (build 4b6ce31) $ python3 --version Python 3.8.10   Later on I found Node v10.19.0 has reached end-of-life and is not supported."><meta name=application-name content="Victor Ma"><meta name=apple-mobile-web-app-title content="Victor Ma"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://decmaxn.github.io/python/aws-cdk-python/><link rel=prev href=https://decmaxn.github.io/python/dns-from-name-tag/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Aws Cdk with Python","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/decmaxn.github.io\/python\/aws-cdk-python\/"},"image":["https:\/\/decmaxn.github.io\/images\/Apple-Devices-Preview.png"],"genre":"python","keywords":"python, AWS, tips, CDK","wordcount":1346,"url":"https:\/\/decmaxn.github.io\/python\/aws-cdk-python\/","datePublished":"2023-04-06T20:08:29-04:00","dateModified":"2023-04-24T01:01:49-04:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"xxxx","logo":"https:\/\/decmaxn.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"Victor Ma"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/python/>Python </a><a class=menu-item href=/go/>Go </a><a class=menu-item href=/k8s/>K8s </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/about/>About </a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Victor Ma">Victor Ma</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/>Posts</a><a class=menu-item href=/python/>Python</a><a class=menu-item href=/go/>Go</a><a class=menu-item href=/k8s/>K8s</a><a class=menu-item href=/tags/>Tags</a><a class=menu-item href=/about/>About</a><a class=menu-item href=https://github.com/decmaxn title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Aws Cdk with Python</h1><div class=content id=content><h2 id=prerequisites>Prerequisites</h2><p>The 2.0 version of CDK is compatible with node 10.19.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ aws --version
+aws-cli/2.7.13 Python/3.9.11 Linux/5.10.102.1-microsoft-standard-WSL2 exe/x86_64.ubuntu.20 prompt/off
+$ aws sts --profile dec 
+$ node --version
+v10.19.0
+$ sudo npm install -g aws-cdk@2.0.0
+$ cdk --version
+2.0.0 <span class=o>(</span>build 4b6ce31<span class=o>)</span>
+$ python3 --version
+Python 3.8.10
+</code></pre></td></tr></table></div></div><p>Later on I found Node v10.19.0 has reached end-of-life and is not supported.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ sudo npm install n -g
+/usr/local/bin/n -&gt; /usr/local/lib/node_modules/n/bin/n
++ n@9.1.0
+added <span class=m>1</span> package from <span class=m>2</span> contributors in 0.442s
+$ sudo n stable
+$ node --version
+v18.16.0
+$ sudo npm install -g npm@latest
+$ sudo npm --version
+9.6.5
+$ sudo npm install -g aws-cdk@latest
+$ cdk --version
+2.76.0 <span class=o>(</span>build 78c411b<span class=o>)</span>
+</code></pre></td></tr></table></div></div><h2 id=new-sample-project>New Sample Project</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ rm -rf cdk<span class=p>;</span> mkdir cdk<span class=p>;</span> <span class=nb>cd</span> cdk
+/cdk$ cdk init sample-app --language python
+Applying project template sample-app <span class=k>for</span> python
+
+<span class=c1># Welcome to your CDK Python project!</span>
+
+You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack <span class=o>(</span><span class=sb>`</span>cdk_stack<span class=sb>`</span><span class=o>)</span> 
+which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+
+The <span class=sb>`</span>cdk.json<span class=sb>`</span> file tells the CDK Toolkit how to execute your app.
+
+This project is <span class=nb>set</span> up like a standard Python project.  The initialization process also creates
+a virtualenv within this project, stored under the .venv directory.  To create the virtualenv
+it assumes that there is a <span class=sb>`</span>python3<span class=sb>`</span> executable in your path with access to the <span class=sb>`</span>venv<span class=sb>`</span> package.
+If <span class=k>for</span> any reason the automatic creation of the virtualenv fails, you can create the virtualenv
+manually once the init process completes.
+
+To manually create a virtualenv on MacOS and Linux:
+ 
+$ python3 -m venv .venv 
+
+After the init process completes and the virtualenv is created, you can use the following
+step to activate your virtualenv.
+ 
+$ <span class=nb>source</span> .venv/bin/activate 
+
+If you are a Windows platform, you would activate the virtualenv like this:
+ 
+% .venv<span class=se>\S</span>cripts<span class=se>\a</span>ctivate.bat 
+
+Once the virtualenv is activated, you can install the required dependencies.
+ 
+$ pip install -r requirements.txt 
+
+At this point you can now synthesize the CloudFormation template <span class=k>for</span> this code.
+ 
+$ cdk synth 
+
+You can now begin exploring the <span class=nb>source</span> code, contained in the hello directory.
+There is also a very trivial <span class=nb>test</span> included that can be run like this:
+ 
+$ pytest 
+
+To add additional dependencies, <span class=k>for</span> example other CDK libraries, just add to
+your requirements.txt file and rerun the <span class=sb>`</span>pip install -r requirements.txt<span class=sb>`</span>
+command.
+
+<span class=c1>## Useful commands</span>
+
+ * <span class=sb>`</span>cdk ls<span class=sb>`</span>          list all stacks in the app
+ * <span class=sb>`</span>cdk synth<span class=sb>`</span>       emits the synthesized CloudFormation template
+ * <span class=sb>`</span>cdk deploy<span class=sb>`</span>      deploy this stack to your default AWS account/region
+ * <span class=sb>`</span>cdk diff<span class=sb>`</span>        compare deployed stack with current state
+ * <span class=sb>`</span>cdk docs<span class=sb>`</span>        open CDK documentation
+
+Enjoy!
+
+Please run <span class=s1>&#39;python3 -m venv .venv&#39;</span>!
+Executing Creating virtualenv...
+✅ All <span class=k>done</span>!
+****************************************************
+*** Newer version of CDK is available <span class=o>[</span>2.76.0<span class=o>]</span>   ***
+*** Upgrade recommended <span class=o>(</span>npm install -g aws-cdk<span class=o>)</span> ***
+****************************************************
+</code></pre></td></tr></table></div></div><h2 id=test-synthesize-and-deploy>Test Synthesize and Deploy</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>/cdk$ <span class=nb>source</span> .venv/bin/activate
+<span class=o>(</span>.venv<span class=o>)</span> /cdk$ pip install -r requirements.txt
+/cdk$ cdk synth
+/cdk$ cdk --profile dec bootstrap
+/cdk$ cdk --profile dec deploy
+</code></pre></td></tr></table></div></div><h2 id=clean-up>Clean up</h2><p>Remove the queue, topic and subscription from cdk/cdk_stack.py file, then review by diff and deploy to clean up</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>/cdk$ cdk --profile dec diff
+Stack cdk
+IAM Statement Changes
+┌───┬─────────────────────────┬────────┬─────────────────┬───────────────────────────┬─────────────────────────────────────────────────────────┐
+│   │ Resource                │ Effect │ Action          │ Principal                 │ Condition                                               │
+├───┼─────────────────────────┼────────┼─────────────────┼───────────────────────────┼─────────────────────────────────────────────────────────┤
+│ - │ <span class=si>${</span><span class=nv>CdkQueueBA7F247D</span><span class=p>.Arn</span><span class=si>}</span> │ Allow  │ sqs:SendMessage │ Service:sns.amazonaws.com │ <span class=s2>&#34;ArnEquals&#34;</span>: <span class=o>{</span>                                          │
+│   │                         │        │                 │                           │   <span class=s2>&#34;aws:SourceArn&#34;</span>: <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CdkTopic7E7E1214</span><span class=si>}</span><span class=s2>&#34;</span>                │
+│   │                         │        │                 │                           │ <span class=o>}</span>                                                       │
+└───┴─────────────────────────┴────────┴─────────────────┴───────────────────────────┴─────────────────────────────────────────────────────────┘
+<span class=o>(</span>NOTE: There may be security-related changes not in this list. See https://github.com/aws/aws-cdk/issues/1299<span class=o>)</span>
+
+Resources
+<span class=o>[</span>-<span class=o>]</span> AWS::SQS::Queue CdkQueueBA7F247D destroy
+<span class=o>[</span>-<span class=o>]</span> AWS::SQS::QueuePolicy CdkQueuePolicy9CB1D142 destroy
+<span class=o>[</span>-<span class=o>]</span> AWS::SNS::Subscription CdkQueuecdkCdkTopic33B437C257F995AC destroy
+<span class=o>[</span>-<span class=o>]</span> AWS::SNS::Topic CdkTopic7E7E1214 destroy
+/cdk$ cdk --profile dec deploy
+</code></pre></td></tr></table></div></div><h2 id=lambda>Lambda</h2><p>Create lambda/hello.py</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>json</span>
+
+<span class=k>def</span> <span class=nf>handler</span><span class=p>(</span><span class=n>event</span><span class=p>,</span> <span class=n>context</span><span class=p>):</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;request: {}&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>json</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>event</span><span class=p>)))</span>
+    <span class=k>return</span> <span class=p>{</span>
+        <span class=s1>&#39;statusCode&#39;</span><span class=p>:</span> <span class=mi>200</span><span class=p>,</span>
+        <span class=s1>&#39;headers&#39;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=s1>&#39;Content-Type&#39;</span><span class=p>:</span> <span class=s1>&#39;text/plain&#39;</span>
+        <span class=p>},</span>
+        <span class=s1>&#39;body&#39;</span><span class=p>:</span> <span class=s1>&#39;Hello, CDK! You have hit {}</span><span class=se>\n</span><span class=s1>&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>event</span><span class=p>[</span><span class=s1>&#39;path&#39;</span><span class=p>])</span>
+    <span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>use it to create a lambda function</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-yaml data-lang=yaml>from<span class=w> </span>aws_cdk<span class=w> </span>import<span class=w> </span>(<span class=w>
+</span><span class=w>    </span>Stack<span class=p>,</span><span class=w>
+</span><span class=w>    </span>aws_lambda<span class=w> </span>as<span class=w> </span>_lambda<span class=p>,</span><span class=w>
+</span><span class=w></span>)<span class=w>
+</span><span class=w></span>...<span class=w>
+</span><span class=w>        </span>my_lambda<span class=w> </span>=<span class=w> </span>_lambda.Function(<span class=w>
+</span><span class=w>            </span>self<span class=p>,</span><span class=w> </span><span class=s1>&#39;HelloHandler&#39;</span><span class=p>,</span><span class=w>
+</span><span class=w>            </span>runtime=_lambda.Runtime.PYTHON_3_8<span class=p>,</span><span class=w>
+</span><span class=w>            </span>handler=<span class=s1>&#39;hello.handler&#39;</span><span class=p>,</span><span class=w>
+</span><span class=w>            </span>code=_lambda.Code.from_asset(<span class=s1>&#39;lambda&#39;</span>)<span class=p>,</span><span class=w>
+</span><span class=w>        </span>)<span class=w>
+</span></code></pre></td></tr></table></div></div><p>and diff, deploy</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>/cdk$ cdk --profile dec diff
+/cdk$ cdk --profile dec deploy
+</code></pre></td></tr></table></div></div><p>Test if it works by Test of the Lambda function or invoke it on AWS</p><h2 id=hotswap-deployments>Hotswap deployments</h2><p>If possible, the CDK CLI will use AWS service APIs to directly make the changes; otherwise it will fall back to performing a full CloudFormation deployment.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>cdk deploy --hotswap
+</code></pre></td></tr></table></div></div><p>cdk watch is similar to cdk deploy except that instead of being a one-shot operation, it monitors your code and assets for changes and attempts to perform a deployment automatically when a change is detected.</p><p>By default, cdk watch will use the &ndash;hotswap flag, which inspects the changes and determines if those changes can be hotswapped.</p><p>Calling cdk watch &ndash;no-hotswap will disable the hotswap behavior.</p><h2 id=api-gateway>API Gateway</h2><p>Put this API gateway in front of the Lambda function. Deploy shows output of it&rsquo;s URL. Curl to test it out.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python>        <span class=n>apigw</span><span class=o>.</span><span class=n>LambdaRestApi</span><span class=p>(</span>
+            <span class=bp>self</span><span class=p>,</span> <span class=s1>&#39;Endpoint&#39;</span><span class=p>,</span>
+            <span class=n>handler</span><span class=o>=</span><span class=n>my_lambda</span><span class=p>,</span>
+        <span class=p>)</span>
+</code></pre></td></tr></table></div></div><h2 id=define-a-new-construct-called-hitcounter>define a new construct called HitCounter</h2><p>it will count how many requests were issued to each URL path. It will store this in a DynamoDB table.</p><p>Create a new file under cdk_workshop called hitcounter.py</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>constructs</span> <span class=kn>import</span> <span class=n>Construct</span>
+<span class=kn>from</span> <span class=nn>aws_cdk</span> <span class=kn>import</span> <span class=p>(</span>
+    <span class=n>aws_lambda</span> <span class=k>as</span> <span class=n>_lambda</span><span class=p>,</span>
+    <span class=n>aws_dynamodb</span> <span class=k>as</span> <span class=n>ddb</span><span class=p>,</span>
+    <span class=c1># RemovalPolicy 是 AWS CDK 中用于指定删除策略的模块。</span>
+    <span class=n>RemovalPolicy</span>
+<span class=p>)</span>
+
+<span class=k>class</span> <span class=nc>HitCounter</span><span class=p>(</span><span class=n>Construct</span><span class=p>):</span>
+    <span class=c1># 创建一个名为 handler 的只读属性，返回 _handler 变量的值。</span>
+    <span class=nd>@property</span>
+    <span class=k>def</span> <span class=nf>handler</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+        <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_handler</span>
+
+    <span class=c1># 装饰器使得可以通过调用属性方法的方式来访问这个私有属性</span>
+    <span class=c1># 而不是直接访问该属性本身。使得代码更加安全和可维护</span>
+    <span class=nd>@property</span>
+    <span class=k>def</span> <span class=nf>table</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+        <span class=c1># 返回这个私有属性_table的值，从而允许其他代码访问该私有属性的值。</span>
+        <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_table</span>
+    
+    <span class=c1>#  构造函数的初始化方法。它需要三个参数：scope 表示当前堆栈，id 表示此构造函数的唯一 ID，</span>
+    <span class=c1># downstream 是一个 AWS Lambda 函数，它需要被计算其调用次数。</span>
+    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>scope</span><span class=p>:</span> <span class=n>Construct</span><span class=p>,</span> <span class=nb>id</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>downstream</span><span class=p>:</span> <span class=n>_lambda</span><span class=o>.</span><span class=n>IFunction</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+        <span class=c1># 调用父类 Construct 的构造函数来创建此自定义构造函数的实例。</span>
+        <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=fm>__init__</span><span class=p>(</span><span class=n>scope</span><span class=p>,</span> <span class=nb>id</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+
+        <span class=c1># 通过 Table 类的构造函数创建了一个名为 table 的 DynamoDB 表对象</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>_table</span> <span class=o>=</span> <span class=n>ddb</span><span class=o>.</span><span class=n>Table</span><span class=p>(</span>
+            <span class=c1># self：表示当前类实例对象自身，即在当前栈中创建的 DynamoDB 表所属的栈。</span>
+            <span class=c1># &#39;Hits&#39;：表示 DynamoDB 表的名称。</span>
+            <span class=bp>self</span><span class=p>,</span> <span class=s1>&#39;Hits&#39;</span><span class=p>,</span>
+            <span class=c1># partition_key：一个字典，表示 DynamoDB 表的分区键。其中，&#39;name&#39; 表示分区键的名称，&#39;type&#39; 表示分区键的数据类型，此处为字符串类型。</span>
+            <span class=n>partition_key</span><span class=o>=</span><span class=p>{</span><span class=s1>&#39;name&#39;</span><span class=p>:</span> <span class=s1>&#39;path&#39;</span><span class=p>,</span> <span class=s1>&#39;type&#39;</span><span class=p>:</span> <span class=n>ddb</span><span class=o>.</span><span class=n>AttributeType</span><span class=o>.</span><span class=n>STRING</span><span class=p>},</span>
+            <span class=c1># removal_policy：表示表的删除策略，此处为移除所有表的数据。</span>
+            <span class=c1># RemovalPolicy.DESTROY：表示表的删除策略，此处为移除所有表的数据。</span>
+            <span class=n>removal_policy</span><span class=o>=</span><span class=n>RemovalPolicy</span><span class=o>.</span><span class=n>DESTROY</span><span class=p>,</span>
+        <span class=p>)</span>
+        
+        <span class=c1>#  创建一个名为 _handler 的 Lambda 函数，将其保存到 self._handler 变量中。</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>_handler</span> <span class=o>=</span> <span class=n>_lambda</span><span class=o>.</span><span class=n>Function</span><span class=p>(</span>
+            <span class=c1># 在当前堆栈下创建一个名为 HitCountHandler 的 Lambda 函数。</span>
+            <span class=bp>self</span><span class=p>,</span>
+            <span class=s1>&#39;HitCountHandler&#39;</span><span class=p>,</span>
+            <span class=n>runtime</span><span class=o>=</span><span class=n>_lambda</span><span class=o>.</span><span class=n>Runtime</span><span class=o>.</span><span class=n>PYTHON_3_7</span><span class=p>,</span>
+            <span class=c1># 将 Lambda 函数的代码从 asset 目录中加载。</span>
+            <span class=n>code</span><span class=o>=</span><span class=n>_lambda</span><span class=o>.</span><span class=n>Code</span><span class=o>.</span><span class=n>from_asset</span><span class=p>(</span><span class=s1>&#39;lambda&#39;</span><span class=p>),</span>
+            <span class=c1># 设置 Lambda 函数的处理程序为 hitcount.handler。</span>
+            <span class=n>handler</span><span class=o>=</span><span class=s1>&#39;hitcount.handler&#39;</span><span class=p>,</span>
+            <span class=n>environment</span><span class=o>=</span><span class=p>{</span>
+                <span class=s1>&#39;DOWNSTREAM_FUNCTION_NAME&#39;</span><span class=p>:</span> <span class=n>downstream</span><span class=o>.</span><span class=n>function_name</span><span class=p>,</span>
+                <span class=s1>&#39;HITS_TABLE_NAME&#39;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>_table</span><span class=o>.</span><span class=n>table_name</span><span class=p>,</span>
+            <span class=p>}</span>
+        <span class=p>)</span>
+
+        <span class=c1># is not authorized to perform: dynamodb:UpdateItem on resource:</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>_table</span><span class=o>.</span><span class=n>grant_read_write_data</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>_handler</span><span class=p>)</span>
+        <span class=c1># is not authorized to perform: lambda:InvokeFunction on resource: </span>
+        <span class=n>downstream</span><span class=o>.</span><span class=n>grant_invoke</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>_handler</span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><p>Write lambda/hitcount.py for the Lambda above</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>json</span>
+<span class=kn>import</span> <span class=nn>os</span>
+
+<span class=kn>import</span> <span class=nn>boto3</span>
+
+<span class=c1># 创建 DynamoDB 和 Lambda 的客户端资源对象</span>
+<span class=n>ddb</span> <span class=o>=</span> <span class=n>boto3</span><span class=o>.</span><span class=n>resource</span><span class=p>(</span><span class=s1>&#39;dynamodb&#39;</span><span class=p>)</span>
+<span class=n>table</span> <span class=o>=</span> <span class=n>ddb</span><span class=o>.</span><span class=n>Table</span><span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=p>[</span><span class=s1>&#39;HITS_TABLE_NAME&#39;</span><span class=p>])</span>
+<span class=n>_lambda</span> <span class=o>=</span> <span class=n>boto3</span><span class=o>.</span><span class=n>client</span><span class=p>(</span><span class=s1>&#39;lambda&#39;</span><span class=p>)</span>
+
+<span class=k>def</span> <span class=nf>handler</span><span class=p>(</span><span class=n>event</span><span class=p>,</span> <span class=n>context</span><span class=p>):</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;request: {}&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>json</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>event</span><span class=p>)))</span>
+    
+    <span class=c1># 更新 DynamoDB 表中的记录</span>
+    <span class=n>table</span><span class=o>.</span><span class=n>update_item</span><span class=p>(</span>
+        <span class=c1># Key 参数指定要更新的记录的主键；</span>
+        <span class=n>Key</span><span class=o>=</span><span class=p>{</span><span class=s1>&#39;path&#39;</span><span class=p>:</span> <span class=n>event</span><span class=p>[</span><span class=s1>&#39;path&#39;</span><span class=p>]},</span>
+        <span class=c1># 将 hits 字段值加上一个 :incr 参数的值</span>
+        <span class=n>UpdateExpression</span><span class=o>=</span><span class=s1>&#39;ADD hits :incr&#39;</span><span class=p>,</span>
+        <span class=c1># 指定了 :incr 参数的实际值为 1</span>
+        <span class=n>ExpressionAttributeValues</span><span class=o>=</span><span class=p>{</span><span class=s1>&#39;:incr&#39;</span><span class=p>:</span> <span class=mi>1</span><span class=p>}</span>
+    <span class=p>)</span>
+    
+    <span class=c1># 调用另一个 Lambda 函数处理请求</span>
+    <span class=n>resp</span> <span class=o>=</span> <span class=n>_lambda</span><span class=o>.</span><span class=n>invoke</span><span class=p>(</span>
+        <span class=n>FunctionName</span><span class=o>=</span><span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=p>[</span><span class=s1>&#39;DOWNSTREAM_FUNCTION_NAME&#39;</span><span class=p>],</span>
+        <span class=n>Payload</span><span class=o>=</span><span class=n>json</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>event</span><span class=p>),</span>
+    <span class=p>)</span>
+    
+    <span class=c1># 获取返回结果并打印</span>
+    <span class=n>body</span> <span class=o>=</span> <span class=n>resp</span><span class=p>[</span><span class=s1>&#39;Payload&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;downstream response: {}&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>body</span><span class=p>))</span>
+    <span class=c1># 返回响应结果</span>
+    <span class=k>return</span> <span class=n>json</span><span class=o>.</span><span class=n>loads</span><span class=p>(</span><span class=n>body</span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><h2 id=troubleshooting-with-cloudwatch-logs>Troubleshooting with Cloudwatch Logs</h2><h2 id=use-3rd-party-module-to-view-dynamodb-table>Use 3rd party module to view DynamoDb table</h2><p>pip install cdk-dynamo-table-view==0.2.0</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>cdk_dynamo_table_view</span> <span class=kn>import</span> <span class=n>TableViewer</span>
+
+        <span class=n>TableViewer</span><span class=p>(</span>
+            <span class=bp>self</span><span class=p>,</span> <span class=s1>&#39;ViewHitCounter&#39;</span><span class=p>,</span>
+            <span class=n>title</span><span class=o>=</span><span class=s1>&#39;Hello Hits&#39;</span><span class=p>,</span>
+            <span class=n>table</span><span class=o>=</span><span class=n>hello_with_counter</span><span class=o>.</span><span class=n>table</span><span class=p>,</span>
+        <span class=p>)</span>
+</code></pre></td></tr></table></div></div><p>Todo: Learn how this module was built</p></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></div></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.68.3">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i>LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2012 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Victor Ma</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i></a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
