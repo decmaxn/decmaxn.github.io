@@ -2,7 +2,7 @@
 title: "Stop_ecs_task"
 date: 2023-02-13T08:43:10-05:00
 draft: false
-tags: ["coding","python","boto3"]
+tags: ["coding","python","boto3","Aws"]
 ---
 
 # Interact with AWS resource with boto3

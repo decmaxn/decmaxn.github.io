@@ -242,9 +242,9 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # 是否在搜索索引中使用基于 baseURL 的绝对路径
     absoluteURL = false
     [params.search.algolia]
-      index = ""
-      appID = ""
-      searchKey = ""
+      index = "decmaxn.github.io"
+      appID = "TPERYROK4S"
+      searchKey = "051cdea68417c51a8546a85eacec9f57"
 
   # Home page config
   # 主页信息设置
@@ -826,6 +826,22 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         post = ""
         name = "K8s"
         url = "/K8s/"
+        title = ""
+      [[languages.en.menu.main]]
+        weight = 5
+        identifier = "Aws"
+        pre = ""
+        post = ""
+        name = "Aws"
+        url = "/Aws/"
+        title = ""
+      [[languages.en.menu.main]]
+        weight = 6
+        identifier = "Azure"
+        pre = ""
+        post = ""
+        name = "Azure"
+        url = "/Azure/"
         title = ""
       [[languages.en.menu.main]]
         weight = 8
