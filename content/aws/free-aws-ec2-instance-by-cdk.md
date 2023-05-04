@@ -1,3 +1,34 @@
+---
+title: "Free Aws Ec2 Instance by Cdk"
+date: 2023-04-11T17:31:29-04:00
+draft: false
+tags: ["cdk", "AWS", "tips", "dev"]
+---
+
+In my previous [Free (almost) Aws Ec2 Instance](../free-aws-ec2-instance) blog, I used Aws Cli. It's good for learning, but in the real world, you need to keep creating/deleting it to save cost. Let's make is easy by using CDK.
+
+## app.py
+
+```python
+#!/usr/bin/env python3
+
+import aws_cdk as cdk
+from cdk.cdk_stack import CdkStack
+
+app = cdk.App()
+env = cdk.Environment(
+    account="xxxxxxxxxxxx",
+    region="us-east-1",
+)
+CdkStack(app, "cdk", env=env)
+
+app.synth()
+```
+
+## cdk/cdk_stack.py
+这里用到的 user_data.txt与[Free (almost) Aws Ec2 Instance](../free-aws-ec2-instance) 中创建的相同。
+
+```python
 from aws_cdk import (
     Stack,
     aws_iam as iam,
@@ -5,7 +36,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 
-# 把user_data写入到一个文件中
+# 从user_data.txt 文件读出 user_data
 with open('user_data.txt') as f:
     user_data = f.read()
 
@@ -14,26 +45,13 @@ class CdkStack(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        # # Find Default VPC
+        # Find the Default VPC
         default_vpc = ec2.Vpc.from_lookup(
             self, "DefaultVpc", 
             is_default=True
         )
 
-
-        # # 创建一个安全组
-        # security_group = ec2.SecurityGroup(
-        #     self, "MySecurityGroup",
-        #     vpc=default_vpc,
-        #     allow_all_outbound=True
-        # )
-
-        # # 添加Inbound规则
-        # security_group.add_ingress_rule(
-        #     peer=ec2.Peer.any_ipv4(),
-        #     connection=ec2.Port.tcp(22)
-        # )
-
+        # Found the latest debian 11 arm64 AMI which could be launched as t4g.small 
         image = ec2.LookupMachineImage(
             owners = ['amazon'],
             name = 'debian-11-arm64*',
@@ -60,8 +78,16 @@ class CdkStack(Stack):
             instance_type=ec2.InstanceType.of(ec2.InstanceClass.BURSTABLE4_GRAVITON, ec2.InstanceSize.SMALL),
             vpc=default_vpc,
             machine_image=image,
-            # security_group=security_group,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
             user_data=ec2.UserData.custom(user_data),
             role=ssm_role
         )
+```
+
+## Create and destroy
+
+```bash
+source .venv/bin/activate
+cdk deploy --profile <your profile with access to account="xxxxxxxxxxxx" above >
+cdk destroy --profile <your profile with access to account="xxxxxxxxxxxx" above >
+```
