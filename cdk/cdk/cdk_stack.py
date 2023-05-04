@@ -5,10 +5,6 @@ from aws_cdk import (
 )
 from constructs import Construct
 
-# 把user_data写入到一个文件中
-with open('user_data.txt') as f:
-    user_data = f.read()
-
 class CdkStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
@@ -21,18 +17,18 @@ class CdkStack(Stack):
         )
 
 
-        # # 创建一个安全组
-        # security_group = ec2.SecurityGroup(
-        #     self, "MySecurityGroup",
-        #     vpc=default_vpc,
-        #     allow_all_outbound=True
-        # )
+        # 创建一个安全组
+        security_group = ec2.SecurityGroup(
+            self, "MySecurityGroup",
+            vpc=default_vpc,
+            allow_all_outbound=True
+        )
 
-        # # 添加Inbound规则
-        # security_group.add_ingress_rule(
-        #     peer=ec2.Peer.any_ipv4(),
-        #     connection=ec2.Port.tcp(22)
-        # )
+        # 添加Inbound规则
+        security_group.add_ingress_rule(
+            peer=ec2.Peer.any_ipv4(),
+            connection=ec2.Port.tcp(22)
+        )
 
         image = ec2.LookupMachineImage(
             owners = ['amazon'],
@@ -42,17 +38,6 @@ class CdkStack(Stack):
                 'architecture': ['arm64']
             },
         )
-        
-        # Create an IAM role for SSM
-        ssm_role = iam.Role(self, "SSMInstanceRole",
-            assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
-            managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name("AmazonSSMManagedInstanceCore")]
-        )
-
-        # Create an instance profile and add the role to it
-        ssm_profile = iam.CfnInstanceProfile(self, "SSMInstanceProfile",
-            roles=[ssm_role.role_name]
-        )
 
         # 创建一个EC2实例, 给公共IP吧
         instance = ec2.Instance(
@@ -60,8 +45,7 @@ class CdkStack(Stack):
             instance_type=ec2.InstanceType.of(ec2.InstanceClass.BURSTABLE4_GRAVITON, ec2.InstanceSize.SMALL),
             vpc=default_vpc,
             machine_image=image,
-            # security_group=security_group,
+            security_group=security_group,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
-            user_data=ec2.UserData.custom(user_data),
-            role=ssm_role
+            user_data=ec2.UserData.custom("#!/bin/bash\necho 'Hello, World!' > index.html\nnohup python -m SimpleHTTPServer 80 &")
         )
