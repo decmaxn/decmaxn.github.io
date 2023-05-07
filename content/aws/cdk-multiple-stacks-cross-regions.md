@@ -1,6 +1,6 @@
 ---
 title: "Cdk Multiple Stacks Cross Regions"
-date: 2023-05-04T18:23:29-04:00
+date: 2023-04-15T18:23:29-04:00
 draft: false
 tags: ["cdk", "AWS", "tips"]
 ---
