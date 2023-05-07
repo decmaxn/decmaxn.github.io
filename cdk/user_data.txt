@@ -3,7 +3,7 @@
 # Basics
 sudo apt update
 sudo apt upgrade -y
-sudo apt-get -qy install --no-install-recommends curl wget zip unzip pv jqs
+sudo apt-get -qy install --no-install-recommends curl wget zip unzip pv jq nginx
 
 # SSM Agent #
 wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_arm64/amazon-ssm-agent.deb
