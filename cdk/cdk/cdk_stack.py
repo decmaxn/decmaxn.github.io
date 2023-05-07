@@ -1,7 +1,9 @@
 from aws_cdk import (
     Stack,
+    CfnOutput,
     aws_iam as iam,
-    aws_ec2 as ec2
+    aws_ec2 as ec2,
+    aws_route53 as route53,
 )
 from constructs import Construct
 
@@ -64,4 +66,21 @@ class CdkStack(Stack):
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
             user_data=ec2.UserData.custom(user_data),
             role=ssm_role
+        )
+
+        CfnOutput(
+            self, "public_ip",
+            value=instance.instance_public_ip,
+            export_name="publicip"
+        )
+
+        health_check = route53.CfnHealthCheck(
+            self,
+            "HealthCheck",
+            health_check_config=route53.CfnHealthCheck.HealthCheckConfigProperty(
+                ip_address=instance.instance_public_ip,
+                type="HTTP",
+                resource_path="/",
+                failure_threshold=3
+            )
         )
