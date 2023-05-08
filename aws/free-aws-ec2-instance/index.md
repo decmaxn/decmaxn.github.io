@@ -54,20 +54,29 @@ Find and use a subnet within a VPC
 ```bash
 # Create a IAM policy, role with SSM session manager permission to assign to the new instance
 aws iam create-role --role-name "SSMInstanceRole" --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
-aws iam attach-role-policy --role-name "SSMInstanceRole" --policy-arn "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-aws iam create-instance-profile --instance-profile-name SSMInstanceProfile
-aws iam add-role-to-instance-profile --instance-profile-name SSMInstanceProfile --role-name SSMInstanceRole
+aws iam attach-role-policy --role-name "SSMInstanceRole" \
+  --policy-arn "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+aws iam create-instance-profile \
+  --instance-profile-name SSMInstanceProfile
+aws iam add-role-to-instance-profile \
+  --instance-profile-name SSMInstanceProfile \
+  --role-name SSMInstanceRole
 
 # find all VPCs and chose one, etc. the first one
 aws ec2 describe-vpcs --query "Vpcs[].VpcId"
 VPC=$(aws ec2 describe-vpcs --query "Vpcs[].VpcId" --output text)
 # find all subnets, private subnets and choose one. Private one is better, but not necessary.
-aws ec2 describe-subnets --query "Subnets[?VpcId==\`$VPC\`].SubnetId"
-aws ec2 describe-subnets --query "Subnets[?VpcId==\`$VPC\`] | [?MapPublicIpOnLaunch==\`false\`].SubnetId"
-SN=$(aws ec2 describe-subnets --query "Subnets[?VpcId==\`$VPC\`].SubnetId | [0]" --output text)
+aws ec2 describe-subnets \
+  --query "Subnets[?VpcId==\`$VPC\`].SubnetId"
+aws ec2 describe-subnets \
+  --query "Subnets[?VpcId==\`$VPC\`] | [?MapPublicIpOnLaunch==\`false\`].SubnetId"
+SN=$(aws ec2 describe-subnets \
+  --query "Subnets[?VpcId==\`$VPC\`].SubnetId | [0]" \
+  --output text)
 
 # Create an EC2 instance which we can use SSM session manager to remote into it
-aws ec2 run-instances --image-id $LATEST_AMI_NAME --count 1 --instance-type t4g.small \
+aws ec2 run-instances --image-id $LATEST_AMI_NAME \
+  --count 1 --instance-type t4g.small \
   --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=vma-test-2-delete}]' \
   --iam-instance-profile Name=SSMInstanceProfile \
   --key-name vma_rsa \
@@ -106,9 +115,14 @@ Host i-0fdc88fe37f8af01b
   HostName i-0fdc88fe37f8af01b
 ```
 ## Config vscode to use this as remote SSH dev env
-1. Install ms-vscode-remote.remote-ssh expension
+1. Install ms-vscode-remote.remote-ssh extension
 2. Control+Shift+P, SSH, connect to host
 3. Choose the instance ID, etc. i-0fdc88fe37f8af01b
+
+## Clean up
+```bash
+aws ec2 terminate-instances --instance-ids ${InstanceId}
+```
 
 ## Misc
 
