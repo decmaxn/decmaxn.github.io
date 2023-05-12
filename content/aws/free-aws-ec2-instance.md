@@ -5,12 +5,17 @@ draft: false
 tags: ["vscode", "AWS", "tips", "dev"]
 ---
 
-## Create a free Linux EC2 instance
-
 Free Trial: Try Amazon EC2 t4g.small instances powered by AWS Graviton2 processors free for up to 750 hours / month until Dec 31st 2023.
 https://aws.amazon.com/blogs/aws/new-t4g-instances-burstable-performance-powered-by-aws-graviton2/
 
-Although the instance is free, but I have been charge a few cents per day under category of "EC2 - Other" for type of EBS:VolumeUsage.gp2. There is no free tier or trail for EBS as far as I know.
+>Note: Although the instance is free, but I have been charge a few cents per day under category of "EC2 - Other" for type of EBS:VolumeUsage.gp2. There is no free tier or trail for EBS as far as I know.
+
+[![Free (almost) Aws Ec2 Instance](http://img.youtube.com/vi/oh4MGPGwjZE/0.jpg)](https://www.youtube.com/watch?v=oh4MGPGwjZE "Launch free Ec2 instance with cli for vscode remote development")
+
+> Only follow this if you are interested with the details under the hood. If you just want to launch an instance for a quick test, refer to [Free Aws Ec2 Instance by Cdk](../free-aws-ec2-instance-by-cdk)
+
+
+## Create a free Linux EC2 instance
 
 Found the latest debian 11 arm64 AMI which could be launched as t4g.small 
 
