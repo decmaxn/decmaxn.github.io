@@ -2,9 +2,11 @@
 
 
 # Array
-It's similar with Python's array. In Go, array is also a continues memoery block in fixed size, so it's faster but not dynamic. 
+Similar with Python's array， array in Go is also a continues memoery block in fixed size, so it's faster but not dynamic. 
 
-It also stores same type objects. What different is Go array is not a pointer. 
+It also stores same type objects.
+
+What different is Go array is not a pointer. 在 Go 中，数组是值类型，传递数组作为参数时会复制整个数组。而在 Python 中，数组（列表）是引用类型，传递数组作为参数时传递的是指向数组的引用，不会复制整个数组。
 
 ```go
 	var myarray [3]int // signature of array is [size]type
@@ -20,7 +22,9 @@ It also stores same type objects. What different is Go array is not a pointer.
 
 # Slice
 
-Slice from an array, or another slice
+Slice from an array, or another slice.
+
+Python提供了切片（Slice）操作符，主要用于对下标操作的时候。简化对数组的操作。每一个切片返回的数据都是原数组的一个副本。不会对原数组有影响. Go与Python完全不一样的是，切片并不存储任何数据，它只是描述了底层数组中的一段。更改切片的元素会修改其底层数组中对应的元素。与它共享底层数组的切片都会观测到这些修改。
 
 ```go
 	myslice := arr[:]  // implicitly, : means from index 0 to last

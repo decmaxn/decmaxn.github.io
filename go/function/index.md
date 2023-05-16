@@ -90,7 +90,12 @@ Allow caller to put in as many as you want parameters with same type. Here is an
 Define it with ... before input Type
 
 ```go
+// 接受一个切片 slice 和零个或多个类型为 Type 的参数 elems，并返回一个新的切片。
 func append(slice []Type， elems ...Type) []Type
+// slice []Type：第一个参数是一个切片，类型为 []Type。Type 是指定切片中元素的类型。
+// elems ...Type：第二个参数是可变参数，可以接受任意数量的类型为 Type 的参数。
+// 				  通过使用 ... 来表示该参数是可变参数。
+// []Type：表示函数的返回类型为一个切片，其中元素的类型为 Type。
 ```
 Call it with multiple 参数
 ```go
@@ -119,17 +124,5 @@ func decrease(a, b int) {
 }
 ```
 应用实例，比如遍历树节点，根据节点不同而采用不同的逻辑（function）处理这个节点。
-
-## 闭包 （匿名函数）
-
- 1. 不能独立存在，只能存在于其他函数中
- 1. 可以赋值给其他变量 ```x:=func(){}```，其实就是声明
- 	函数也是一种数据类型，因为它虽然不是变量，但是存在于内存中的地址块。函数名的本质是一个指向其内存地址的指针常量。
- 1. 可以直接掉用```func(x,y int){println(x+y)}(1,2)```
-	注意直接调用是在声明的后面加上参数，其实就是 invoke 的格式。 
-	function 不等同于 invoke function
- 1. 可以作为函数返回值 ```func Add()(func(b int) int)```
-
-
 
 
