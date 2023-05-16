@@ -47,8 +47,8 @@ code --install-extension golang.go
 
 Now, try creat a hello world program and try to features of those tool
 
-1. type pack to see it suggests {}package main
-2. type fm to see it suggests func main{}
+1. type pack to see it suggests package main
+2. type func to see it suggests func main{}
 3. type fmt.Println("Hello world!") slowly to see it suggests the rest.
 4. save this file to see it added import "fmt"
 5. start a terminal and use go run . to see it runs properly.
