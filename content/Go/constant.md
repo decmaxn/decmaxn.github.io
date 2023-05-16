@@ -27,6 +27,8 @@ Normal side of Go constant:
 These list of const have been limited to a new string type "ServiceType", so you will never have a typo on the strings. 
 
 ```go
+# 使用 type 关键字定义新的类型， ServiceType 是一个自定义类型，其基础类型是 string。
+# 通过为不同的概念和实体引入自定义类型，可以使代码更具表达力和可读性
 type ServiceType string
 
 const (
@@ -61,13 +63,13 @@ You can also use complex constant expresssion
 ```go
 const (
 	_  = iota             // Ignore the first iota, which is 0
-	KB = 1 << (10 * iota) // 1 << (10 * 1)，bit shift operator
-	MB                    // 1 << (10 * 2)，same as 1 times 2^20
-	GB                    // 1 << (10 * 3)，2^10 = 1024...
-	TB                    // 1 << (10 * 4)，
+	KB = 1 << (10 * iota) // 1 << (10 * 1)，same as 1 times 2^10 
+	MB 、// 1 << (10 * 2)，same as 1 times 2^20，（2^10 = 1024）
+	GB                    // 1 << (10 * 3)，This is called
+	TB                    // 1 << (10 * 4)，bit shift operator
 )
 ```
-The purpose of iota is for convinient.
+The purpose of iota is for convenient.
 
 ## 跨包全局常量（或变量）
 
