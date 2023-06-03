@@ -24,29 +24,12 @@ I didn't use choco install miniconda3, as it's not up to date and has complains.
 1. from https://docs.conda.io/en/latest/miniconda.html#installing
 1. and  Install for myself
 
-Miniconda installers contain the conda package manager and Python. 
-
-There are two variants of the installer: Miniconda is Python 2 based and Miniconda3 is Python 3 based. 
-
-Note that the choice of which Miniconda is installed only affects the root environment. Regardless of which version of Miniconda you install, you can still install both Python 2.x and Python 3.x environments. ```$ conda create -n myenv python``` will be to install Python 2.7 with the Python 2 Miniconda and to install Python 3.10 with the Python 3 Miniconda.
-
 ```powershell
 PS C:\Users\vma> py -0p
 Installed Pythons found by C:\WINDOWS\py.exe Launcher for Windows
  -3.8-64        C:\Users\vma\AppData\Local\Programs\Python\Python38\python.exe *
  -3.10-64       C:\Users\vma\miniconda3\python.exe
 ```
-### Manage conda environments
-
-When you begin using conda, you already have a default environment named base. You don't want to put programs into your base environment, though. Create separate environments to keep your programs isolated from each other.
-
-Create a new environment and install a package in it. For example, We will name the environment snowflakes and install the package BioPython. 
-```powershell
-conda create --name snowflakes biopython
-#To use, or "activate" the new environment, type the following:
-conda activate snowflakes
-```
-conda activate only works on conda 4.6 and later versions.
 
 ## vscode setup
 Start vscode, open a command prompt terminal.
@@ -63,4 +46,3 @@ Restart vscode
 ## First jupyter Notebook
 
 Refer to [First jupyter Notebook](../jupyter-vscode-wsl-conda#first-jupyter-notebook)
-
