@@ -58,10 +58,9 @@ pip install boto3
 EOF
 ```
 
-Find and use a subnet within a VPC
+Create a IAM policy, role and Ec2 instance profile with SSM session manager permission to assign to the new instance
 
 ```bash
-# Create a IAM policy, role with SSM session manager permission to assign to the new instance
 aws iam create-role --role-name "SSMInstanceRole" --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
 aws iam attach-role-policy --role-name "SSMInstanceRole" \
   --policy-arn "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
@@ -70,7 +69,16 @@ aws iam create-instance-profile \
 aws iam add-role-to-instance-profile \
   --instance-profile-name SSMInstanceProfile \
   --role-name SSMInstanceRole
+```
 
+If you prefer to use existing role and Ec2 instance profile:
+```bash
+aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+aws iam list-instance-profiles-for-role --role-name <RoleName you picked from output of above cmd>
+```
+
+Find and use a subnet within a VPC
+```bash
 # find all VPCs and chose one, etc. the first one
 aws ec2 describe-vpcs --query "Vpcs[].VpcId"
 VPC=$(aws ec2 describe-vpcs --query "Vpcs[].VpcId" --output text)
