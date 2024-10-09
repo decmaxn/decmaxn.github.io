@@ -77,11 +77,6 @@ class CdkStack(Stack):
             managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name("AmazonSSMManagedInstanceCore")]
         )
 
-        # Create an instance profile and add the role to it
-        ssm_profile = iam.CfnInstanceProfile(self, "SSMInstanceProfile",
-            roles=[ssm_role.role_name]
-        )
-
         # 创建一个EC2实例, 给公共IP吧
         instance = ec2.Instance(
             self, "MyInstance",
