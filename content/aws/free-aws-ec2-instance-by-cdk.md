@@ -60,6 +60,16 @@ class CdkStack(Stack):
                 'architecture': ['arm64']
             },
         )
+
+        # Found the latest ubuntu 24 arm64 AMI
+        # image = ec2.LookupMachineImage(
+        #     owners=['099720109477'],  # Canonical 的 AWS 账户 ID
+        #     name='ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-server-*',  # Ubuntu 24 ARM64 的 AMI 名称模式
+        #     filters={
+        #         'virtualization-type': ['hvm'],
+        #         'architecture': ['arm64']
+        #     },
+        # )
         
         # Create an IAM role for SSM
         ssm_role = iam.Role(self, "SSMInstanceRole",
