@@ -1,7 +1,7 @@
-# Free Aws Ec2 Instance by Cdk
+# Cdk Free Ec2 in Special Subnet Sg
 
 
-In my previous [Free (almost) Aws Ec2 Instance](../free-aws-ec2-instance) blog, I used Aws Cli. It's good for learning, but in the real world, you need to keep creating/deleting it to save cost. Let's make is easy by using CDK.
+Based on ["Free Aws Ec2 Instance by Cdk"](../free-aws-ec2-instance-by-cdk), let's change it so it will create and free EC2 instance in a special VPC, subnet and Security Group. This is good for network conectivity testing.
 
 ## app.py
 
@@ -16,7 +16,15 @@ env = cdk.Environment(
     account="xxxxxxxxxxxx",
     region="us-east-1",
 )
-CdkStack(app, "cdk", env=env)
+
+# Hardcoded the location and security group of this EC2 instance
+subnet_id = "subnet-xxxxxxxxxxxxxxxx"  # Replace with your actual subnet ID
+availability_zone = "us-east-1a"  # Replace with your actual availability zone
+sg_id = "sg-xxxxxxxxxxxxx"  # Replace with your actual security group ID
+vpc_id = "vpc-xxxxxxxxxxxxxx"  # Replace with your actual VPC ID
+
+# Instantiate the stack with subnet_id, availability_zone, sg_id, and vpc_id
+CdkStack(app, "cdk", env=env, subnet_id=subnet_id, sg_id=sg_id, availability_zone=availability_zone, vpc_id=vpc_id)
 
 app.synth()
 ```
@@ -38,14 +46,8 @@ with open('user_data.txt') as f:
 
 class CdkStack(Stack):
 
-    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, id: str, subnet_id: str, sg_id: str, vpc_id: str, availability_zone: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-
-        # Find the Default VPC
-        default_vpc = ec2.Vpc.from_lookup(
-            self, "DefaultVpc", 
-            is_default=True
-        )
 
         # Found the latest debian 11 arm64 AMI which could be launched as t4g.small 
         image = ec2.LookupMachineImage(
@@ -66,20 +68,30 @@ class CdkStack(Stack):
         #         'architecture': ['arm64']
         #     },
         # )
-        
+
         # Create an IAM role for SSM
         ssm_role = iam.Role(self, "SSMInstanceRole",
             assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
             managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name("AmazonSSMManagedInstanceCore")]
         )
 
+        # Import the subnet with availability zone
+        subnet = ec2.Subnet.from_subnet_attributes(self, "Subnet",
+            subnet_id=subnet_id,
+            availability_zone=availability_zone
+        )
+
+        # Import the VPC by its ID (use VPC ID)
+        vpc = ec2.Vpc.from_lookup(self, "VPC", vpc_id=vpc_id)
+
         # 创建一个EC2实例, 给公共IP吧
         instance = ec2.Instance(
-            self, "MyInstance",
+            self, "testing-ec2",
             instance_type=ec2.InstanceType.of(ec2.InstanceClass.BURSTABLE4_GRAVITON, ec2.InstanceSize.SMALL),
-            vpc=default_vpc,
             machine_image=image,
-            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
+            vpc=vpc,
+            vpc_subnets=ec2.SubnetSelection(subnets=[subnet]),
+            security_group=ec2.SecurityGroup.from_security_group_id(self, "SecurityGroup", sg_id),
             user_data=ec2.UserData.custom(user_data),
             role=ssm_role
         )
