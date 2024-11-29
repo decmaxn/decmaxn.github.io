@@ -3,22 +3,33 @@
 
 # CLI, not GUI
 
-CLI is the ONLY desktop for IT professionals as it allows for efficient and precise execution of tasks, plus small text documentation without screen shots.  
+CLI is the preferred interface for IT professionals as it allows for efficient and precise task execution, along with indexable documentation.
 
-# Scripting, not documentation
+# Scripting, not instruction
 
-Put commands together and copy/paste can be used to automate processes and manage multiple systems at once. Scripting to stack tasks to make large systems and problems manageable like [My MDT system](https://github.com/decmaxn/MDTlab.git) 
+Combine commands together to enable automation and manage multiple systems simultaneously through copy/paste.
 
-# DevSecOps
+Scripting enables stacking or looping through tasks, making large systems and complex problems manageable—for example,  [My MDT system](https://github.com/decmaxn/MDTlab.git) 
 
-Create infrastructure with Cloudformation, Terraform, SAM. Provision with Ansible. 
-Git repos should be the single system of truth for both code and infr, even documents.
+# DevOps
 
-# Programing
+Create infrastructure with Cloudformation, Terraform. Provision with Ansible. CICD with Azure DevOps or CodePipeline.
 
-Kubernetes or Cloud eliminate the requirement of DevOps.
+Git repos should serve as the single source of truth for applications, infrastructure, documents, and operations.
 
-It's time to improve my scripting skills, and deal with error and logic with real programing, eventually everything is code.
+# Programing?
+
+Use AWS SAM to develop and deploy automation solutions that integrate both logic and infrastructure.
+
+Cloud and Serverless technologies are integrating infra directly into app development for Dev teams.
+
+I’m still exploring whether becoming a programmer aligns with my career goals
+
+# SRE
+
+Use Datadog for monitoring and AWS SAM for automation.
+
+By managing error budgets and responding to incidents, I maintain a balance between innovation and stability to consistently meet SLA requirements.
 
 # For HR and Agent:
 
