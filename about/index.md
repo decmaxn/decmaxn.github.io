@@ -70,4 +70,6 @@ I have accumulated some certificates from different vendors when I was on differ
     <img src="/AWS Certified Solutions Architect - Professional.png" alt="AWS Certified Solutions Architect - Professional">
     <img src="/AWS Certified SysOps Administrator - Associate.png" alt="/AWS Certified SysOps Administrator - Associate">
     <img src="/AWS Certified Solutions Architect - Associate.png" alt="/AWS Certified Solutions Architect - Associate">
+    <img src="/IBM Certified System Administrator.jpg" alt="/IBM Certified System Administrator for AIX 7">
+    <img src="/symantec Certified Profesional.jpg" alt="/Symantec Certified Profesional">
   </div>
