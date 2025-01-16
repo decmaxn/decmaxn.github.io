@@ -805,6 +805,14 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         title = ""
       [[languages.en.menu.main]]
         weight = 2
+        identifier = "AI"
+        pre = ""
+        post = ""
+        name = "AI"
+        url = "/AI/"
+        title = ""
+      [[languages.en.menu.main]]
+        weight = 2
         identifier = "python"
         pre = ""
         post = ""
